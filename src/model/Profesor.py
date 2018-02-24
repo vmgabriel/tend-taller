@@ -12,7 +12,7 @@ class Profesor(Persona):
     """
     Clase de Profesor
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, titulo, contrato ,is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, titulo, contrato ,is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
         """
         Constructor de clase de Profesor
 
@@ -28,7 +28,7 @@ class Profesor(Persona):
         @type ini_nombramiento: datetime
         @type fin_nombramiento: datetime
         """
-        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia)
+        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia)
         self.is_visitante = is_visitante
         self.contrato = contrato
         self.titulo = titulo

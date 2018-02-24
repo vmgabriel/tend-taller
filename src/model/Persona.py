@@ -7,7 +7,7 @@ class Persona(object):
     """
     Representacion de los datos basicos de la persona
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, ciu_residencia):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, ciu_residencia, dir_residencia):
         """
         Constructor de Persona
 
@@ -19,6 +19,7 @@ class Persona(object):
         @param edad: Edad de persona
         @param lug_nacimiento: Lugar de nacimiento
         @param ciu_residencia: Ciudad de Residencia
+        @param dir_residencia: Direccin de Residencia
 
         @type num: integer
         @type nombre1: str
@@ -28,6 +29,7 @@ class Persona(object):
         @type edad: int
         @type lug_nacimiento: Ciudad
         @type ciu_residencia: Ciudad
+        @type dir_residencia: str
         """
         self.num = num
         self.nombre1 = nombre1
@@ -37,6 +39,7 @@ class Persona(object):
         self.edad = edad
         self.lugar_nacimiento = lug_nacimiento
         self.ciudad_residencia = ciu_residencia
+        self.direccion_residencia = dir_residencia
 
     def __str__(self):
         """
@@ -53,6 +56,7 @@ class Persona(object):
         Apellido2: {},
         Edad: {},
         Lugar de Nacimiento {},
-        Ciudad de Residencia Actual {}
-        """.format(self.num, self.nombre1, self.nombre2, self.apellido1, self.apellido2, self.edad, self.lugar_nacimiento.get_nom(), self.ciudad_residencia.get_nom())
+        Ciudad de Residencia Actual {},
+        Direccion de Residencia Actual {}
+        """.format(self.num, self.nombre1, self.nombre2, self.apellido1, self.apellido2, self.edad, self.lugar_nacimiento.get_nom(), self.ciudad_residencia.get_nom(), self.direccion_residencia)
         return str_datos

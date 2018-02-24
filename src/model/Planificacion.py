@@ -7,25 +7,41 @@ class Planificacion():
     """
     Clase de Planificacion de los estudiantes
     """
-    def __init__(self, semestre):
+    def __init__(self, semestre, id_estudiante, id_curso):
         """
         Constructor de clase de Planificacion
-        @param semestre: Semestre en el que se esta planificando
+        @param id_estudiante: Codigo unico del estudiante
+        @param id_curso: Codigo unico del curso
+        @param semestre: Semestre en el que el estudiante se inscribio
+
+        @type id_estudiante: integer
+        @type id_curso: integer
         @type semestre: integer
         """
+        self.id_estudiante = id_estudiante
+        self.id_curso = id_curso
         self.semestre = semestre
-        self.cursos_a_tomar = []
 
     def __str__(self):
         """
-        Convierte Clase a str
+        Conversion de clase a str
 
-        @return: Clase convertida
+        @return: Conversion de clase
         @rtype: str
         """
-        cont = 0
-        str_clase = ""
-        for curso in self.cursos_a_tomar:
-            cont += 1
-            str_clase += " Clase {}: {}".format(cont, curso)
-        return "Semestre {}".format(self.semestre) + str_clase
+        str_clase = """Codigo de Estudiante: {},
+        Codigo de Clase: {},
+        Semestre: {},
+        Nota: {}
+        """.format(self.id_estudiante, self.id_curso, self.semestre, self.nota)
+        return str_clase
+
+    def set_nota(self, nota):
+        """
+        Poner nota al estudiante que esta inscrito en el curso
+
+        @param nota: Nota obtenida del curso
+
+        @type nota: double
+        """
+        self.nota = nota
