@@ -12,7 +12,7 @@ class Frm_Lista_Profesor(Gtk.Window):
     """
     Clase de la lista de los profesores
     """
-    def __init__(self, formulario_siguiente):
+    def __init__(self, formulario_siguiente=""):
         """
         Construtor de la clase Frm_Lista_Profesor, enfocado a la vista
 
@@ -118,7 +118,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         """
         pass
 
-    def on_btn_seleccionar_clicked(self):
+    def on_btn_seleccionar_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de profesor
 
@@ -127,3 +127,15 @@ class Frm_Lista_Profesor(Gtk.Window):
         """
         if (self.formulario_siguiente == "lista_curso"):
             print("seleccionado {}".format(self.formulario_siguiente))
+        elif (self.formulario_siguiente == "crear_estudiante"):
+            print("seleccionado {}".format(self.formulario_siguiente))
+        elif (self.formulario_siguiente == ""):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+                Gtk.ButtonsType.YES_NO, "Eliminar Profesor")
+            dialog.format_secondary_text(
+                "Desea eliminar el profesor?, de ser asi no volvera a recuperar sus datos")
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                print("eliminando")
+
+            dialog.destroy()
