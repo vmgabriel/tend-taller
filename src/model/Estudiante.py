@@ -10,7 +10,7 @@ class Estudiante(Persona):
     """
     Clase de los estudiantes
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, is_graduado = False):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, semestre):
         """
         Constructor de estudiante, tiene datos de persona, quien es su super-clase
 
@@ -19,7 +19,7 @@ class Estudiante(Persona):
         @type is_graduado: bool
         """
         Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia)
-        self.is_graduado = is_graduado
+        self.semestre = semestre
 
     def es_is_graduado(self):
         """
@@ -28,7 +28,7 @@ class Estudiante(Persona):
         @return: Retorno de graduado en español
         @rtype: str
         """
-        if (self.is_graduado):
+        if (self.semestre == 11):
             return "si"
         else:
             return "no"
@@ -59,11 +59,11 @@ class Estudiante(Persona):
             return True
         return False
 
-    def set_planificacion(self, planificion):
+    def set_horario(self, horario):
         """
-        Modifica y relaciona la planificion dada
+        Modifica y relaciona el horario dado
 
-        @param planificion: Planifacion que se va a vincular a estudiante
-        @type planificion: Planifacion
+        @param planificion: Horario que se va a vincular a estudiante
+        @type planificion: Horario
         """
-        self.planificacion = planificion
+        self.horario = horario
