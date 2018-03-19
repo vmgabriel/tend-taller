@@ -46,9 +46,17 @@ class Frm_Lista_Curso(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_seleccionar = Gtk.Button(label="Seleccionar")
-        self.btn_seleccionar.connect("clicked", self.on_btn_seleccionar_clicked)
-        box_p.pack_end(self.btn_seleccionar, True, True, 0)
+        self.btn_modificar = Gtk.Button(label="Modificar")
+        self.btn_modificar.connect("clicked", self.on_btn_modificar_clicked)
+        box_p.pack_end(self.btn_modificar, True, True, 0)
+
+        self.btn_borrar = Gtk.Button(label="Borrar")
+        self.btn_borrar.connect("clicked", self.on_btn_borrar_clicked)
+        box_p.pack_end(self.btn_borrar, True, True, 0)
+
+        self.btn_cerrar = Gtk.Button(label="Cerrar")
+        self.btn_cerrar.connect("clicked", self.on_btn_cerrar_clicked)
+        box_p.pack_end(self.btn_cerrar, True, True, 0)
 
         return box_p
 
@@ -82,7 +90,7 @@ class Frm_Lista_Curso(Gtk.Window):
         self.set_default_size (500, 400)
         self.show_all()
 
-    def on_btn_seleccionar_clicked(self):
+    def on_btn_modificar_clicked(self):
         """
         Evento que funciona al accionar el boton de curso
 
@@ -90,3 +98,21 @@ class Frm_Lista_Curso(Gtk.Window):
         @type widget: Gtk.Widget
         """
         pass
+
+    def on_btn_borrar_clicked(self):
+        """
+        Evento que funciona al accionar el boton de curso
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
+        """
+        pass
+
+    def on_btn_cerrar_clicked(self):
+        """
+        Evento que funciona al accionar el boton de cerrar
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
+        """
+        self.destroy

@@ -10,6 +10,7 @@ from gi.repository import Gtk
 
 from view.frmListaCursos import Frm_Lista_Curso
 from view.frmListaProfesor import Frm_Lista_Profesor
+from view.frmCrearCurso import Frm_Crear_Curso
 
 class Frm_Principal_Profesor(Gtk.Window):
     """
@@ -141,7 +142,8 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        frmprof = Frm_Lista_Profesor("lista_curso")
+        frmprof.dev_frm()
 
     def on_btn_crear_curso_clicked(self, widget):
         """
@@ -150,7 +152,7 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        frmcur = Frm_Lista_Curso(1,"lista_curso")
+        frmcur = Frm_Crear_Curso()
         frmcur.dev_frm()
 
     def on_btn_crear_estudiante_clicked(self, widget):
