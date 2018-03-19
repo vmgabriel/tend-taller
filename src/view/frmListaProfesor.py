@@ -8,6 +8,14 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+import time
+from datetime import date
+
+from model.Profesor import Profesor
+from model.Ciudad import Ciudad
+
+from view.frmCrearNombramiento import Frm_Crear_Nombramiento
+
 class Frm_Lista_Profesor(Gtk.Window):
     """
     Clase de la lista de los profesores
@@ -129,6 +137,18 @@ class Frm_Lista_Profesor(Gtk.Window):
             print("seleccionado {}".format(self.formulario_siguiente))
         elif (self.formulario_siguiente == "crear_estudiante"):
             print("seleccionado {}".format(self.formulario_siguiente))
+        elif (self.formulario_siguiente == "modificar_profesor"):
+            #seleccionar y consultar los datos para su posteorior seleccion
+            prof = Profesor(123, "Pedro", "Andres", "Paramo", "Diaz", 23, Ciudad("", ""), Ciudad("", ""), "calle", "Doctor", "contratista", True, date(2010,10,10), date(2012,12,12))
+            if (prof.is_visitante):
+                frm = Frm_Crear_Nombramiento()
+                frm.load(prof)
+                frm.dev_frm()
+            else:
+                frm = Frm_Crear_Profesor()
+                frm.load(prof)
+                frm.dev_frm()
+
         elif (self.formulario_siguiente == ""):
             dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
                 Gtk.ButtonsType.YES_NO, "Eliminar Profesor")

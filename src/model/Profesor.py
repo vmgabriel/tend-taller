@@ -6,13 +6,14 @@
 # Dependencias
 import datetime
 from datetime import date
-from Persona import Persona
+
+from model.Persona import Persona
 
 class Profesor(Persona):
     """
     Clase de Profesor
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, titulo, contrato ,is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, titulo, contrato, is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
         """
         Constructor de clase de Profesor
 
@@ -77,3 +78,23 @@ class Profesor(Persona):
         @type departamento: Departamento
         """
         self.departamento = departamento
+
+    def set_ini_nombramiento(self, fecha):
+        """
+        Modifica la fecha de inicio de nombramiento
+
+        @param fecha: Fecha de nombramiento_ini
+
+        @type fecha: date
+        """
+        self.inicio_nombramiento = fecha
+
+    def set_fin_nombramiento(self, fecha):
+        """
+        Modifica la fecha de fin de nombramiento
+
+        @param fecha: Fecha de nombramiento_fin
+
+        @type fecha: date
+        """
+        self.fin_nombramiento = fecha

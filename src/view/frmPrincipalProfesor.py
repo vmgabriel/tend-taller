@@ -228,4 +228,5 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("7")
+        frmprof = Frm_Lista_Profesor("modificar_profesor")
+        frmprof.dev_frm()

@@ -8,6 +8,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+import time
+from datetime import date
+
+from view.frmCrearProfesor import Frm_Crear_Profesor
+
 class Frm_Crear_Nombramiento(Gtk.Window):
     """
     Clase en la que se va a poder crear o modificar el Nombramiento del Profesor
@@ -18,6 +23,18 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         """
         self.titulo = "Crear Nombramiento de Profesor"
         Gtk.Window.__init__(self, title=self.titulo)
+        self.modificar = False
+
+    def load(self, profesor):
+        """
+        Carga los datos para su posterior modificacion
+
+        @param profesor: Datos referentes al profesor
+
+        @type profesor: Profesor
+        """
+        self.profesor = profesor
+        self.modificar = True
 
     def box1(self):
         """
@@ -31,6 +48,11 @@ class Frm_Crear_Nombramiento(Gtk.Window):
 
         self.nombramiento_ini = Gtk.Calendar()
         box_p.pack_end(self.nombramiento_ini, True, True, 1)
+
+        if (self.modificar):
+            self.nombramiento_ini.day = self.profesor.inicio_nombramiento.day
+            self.nombramiento_ini.month = self.profesor.inicio_nombramiento.month
+            self.nombramiento_ini.year = self.profesor.inicio_nombramiento.year
 
         self.lbl_nombramiento_ini = Gtk.Label("Seleccione Inicio de Nombramiento:")
         box_p.pack_end(self.lbl_nombramiento_ini, False, False, 1)
@@ -49,6 +71,11 @@ class Frm_Crear_Nombramiento(Gtk.Window):
 
         self.nombramiento_fin = Gtk.Calendar()
         box_p.pack_end(self.nombramiento_fin, True, True, 1)
+
+        if (self.modificar):
+            self.nombramiento_fin.day = self.profesor.fin_nombramiento.day
+            self.nombramiento_fin.month = self.profesor.fin_nombramiento.month
+            self.nombramiento_fin.year = self.profesor.fin_nombramiento.year
 
         self.lbl_nombramiento_fin = Gtk.Label("Seleccione Fin de Nombramiento:")
         box_p.pack_end(self.lbl_nombramiento_fin, False, False, 1)
@@ -118,7 +145,18 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        fi = self.nombramiento_ini.get_date()
+        ff = self.nombramiento_fin.get_date()
+        if (self.modificar):
+            self.profesor.set_ini_nombramiento(fi)
+            self.profesor.set_fin_nombramiento(ff)
+
+            frm = Frm_Crear_Profesor()
+            frm.load(self.profesor)
+            frm.dev_frm()
+        else:
+            frm = Frm_Crear_Profesor(fi, ff)
+            frm.dev_frm()
 
     def on_btn_borrar_clicked(self, widget):
         """
@@ -127,7 +165,13 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        hoy = date.today()
+        self.nombramiento_ini.day = hoy.day
+        self.nombramiento_ini.month = hoy.month
+        self.nombramiento_ini.year = hoy.year
+        self.nombramiento_fin.day = hoy.day
+        self.nombramiento_fin.month = hoy.month
+        self.nombramiento_fin.year = hoy.year
 
     def on_btn_salir_clicked(self, widget):
         """
