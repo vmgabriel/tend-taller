@@ -8,6 +8,9 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+from view.frmListaCursos import Frm_Lista_Curso
+from view.frmListaProfesor import Frm_Lista_Profesor
+
 class Frm_Principal_Profesor(Gtk.Window):
     """
     Formulario principal del profesor
@@ -138,7 +141,8 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("1")
+        frmProf = Frm_Lista_Profesor("lista_curso")
+        frmProf.dev_frm()
 
     def on_btn_crear_curso_clicked(self, widget):
         """
