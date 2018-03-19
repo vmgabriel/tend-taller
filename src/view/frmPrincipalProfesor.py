@@ -141,8 +141,7 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        frmProf = Frm_Lista_Profesor("lista_curso")
-        frmProf.dev_frm()
+        pass
 
     def on_btn_crear_curso_clicked(self, widget):
         """
@@ -151,7 +150,8 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("2")
+        frmcur = Frm_Lista_Curso(1,"lista_curso")
+        frmcur.dev_frm()
 
     def on_btn_crear_estudiante_clicked(self, widget):
         """
