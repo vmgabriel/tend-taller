@@ -55,7 +55,7 @@ CREATE TABLE "curso"
   "nombre" VARCHAR(50) NOT NULL,
   "aula" VARCHAR(10) NOT NULL,
   "tiempo" INTEGER NOT NULL,
-  "dia_reunion" DATETIME NOT NULL,
+  "dia_reunion" TIMESTAMP NOT NULL,
   "edificio" INTEGER NOT NULL, /*departamento*/
   "profesor" INTEGER NOT NULL
 );
@@ -65,8 +65,8 @@ CREATE TABLE "horario"
   "id_horario" BIGSERIAL NOT NULL,
   "cod_estudiante" INTEGER NOT NULL,
   "cod_curso" INTEGER NOT NULL,
-  "fecha_inicio" DATETIME NOT NULL,
-  "fecha_fin" DATETIME NOT NULL,
+  "fecha_inicio" TIMESTAMP NOT NULL,
+  "fecha_fin" TIMESTAMP NOT NULL,
   "semestre" INTEGER NOT NULL
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE "estudiante"
   "edad" INTEGER NOT NULL,
   "lugar_nacimiento" INTEGER NOT NULL, /*Ciudad*/
   "ciudad_residencia" INTEGER NOT NULL,
-  "direccion_residencia" VARCHAR(150) NOT NULLs
+  "direccion_residencia" VARCHAR(150) NOT NULL,
   "semestre" INTEGER NOT NULL,
   "consejero" INTEGER NULL /*Profesor*/
 );
@@ -109,7 +109,7 @@ ALTER TABLE "curso" ADD CONSTRAINT "FK_curso_edificio"
   FOREIGN KEY ("edificio") REFERENCES "departamento" ("id_departamento") ON DELETE No Action ON UPDATE No Action;
 
 ALTER TABLE "profesor" ADD CONSTRAINT "FK_profesor_lugNacimiento"
-  FOREIGN KEY ("lug_nacimiento") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
+  FOREIGN KEY ("lugar_nacimiento") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
 
 ALTER TABLE "profesor" ADD CONSTRAINT "FK_profesor_ciuResidencia"
   FOREIGN KEY ("ciudad_residencia") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
@@ -121,7 +121,7 @@ ALTER TABLE "departamento" ADD CONSTRAINT "FK_departamento_ciudad"
   FOREIGN KEY ("id_ciudad") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
 
 ALTER TABLE "estudiante" ADD CONSTRAINT "FK_estudiante_lugNacimiento"
-  FOREIGN KEY ("lug_nacimiento") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
+  FOREIGN KEY ("lugar_nacimiento") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
 
 ALTER TABLE "estudiante" ADD CONSTRAINT "FK_estudiante_ciuResidencia"
   FOREIGN KEY ("ciudad_residencia") REFERENCES "ciudad" ("id_ciudad") ON DELETE No Action ON UPDATE No Action;
