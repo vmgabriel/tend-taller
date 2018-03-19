@@ -12,6 +12,7 @@ from view.frmListaCursos import Frm_Lista_Curso
 from view.frmListaProfesor import Frm_Lista_Profesor
 from view.frmCrearCurso import Frm_Crear_Curso
 from view.frmCrearEstudiante import Frm_Crear_Estudiante
+from view.frmListaEstudiante import Frm_Lista_Estudiante
 
 class Frm_Principal_Profesor(Gtk.Window):
     """
@@ -184,7 +185,8 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("4")
+        frmcur = Frm_Lista_Estudiante()
+        frmcur.dev_frm()
 
     def on_btn_crear_profesor_clicked(elf, widget):
         """
