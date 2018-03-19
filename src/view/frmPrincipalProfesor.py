@@ -13,6 +13,8 @@ from view.frmListaProfesor import Frm_Lista_Profesor
 from view.frmCrearCurso import Frm_Crear_Curso
 from view.frmCrearEstudiante import Frm_Crear_Estudiante
 from view.frmListaEstudiante import Frm_Lista_Estudiante
+from view.frmCrearProfesor import Frm_Crear_Profesor
+from view.frmCrearNombramiento import Frm_Crear_Nombramiento
 
 class Frm_Principal_Profesor(Gtk.Window):
     """
@@ -188,14 +190,26 @@ class Frm_Principal_Profesor(Gtk.Window):
         frmcur = Frm_Lista_Estudiante()
         frmcur.dev_frm()
 
-    def on_btn_crear_profesor_clicked(elf, widget):
+    def on_btn_crear_profesor_clicked(self, widget):
         """
         Evento para btn de crear profesor
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("5")
+        dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+            Gtk.ButtonsType.YES_NO, "Profesor de Planta")
+        dialog.format_secondary_text(
+            "Es el profesor de planta?")
+        response = dialog.run()
+        if response == Gtk.ResponseType.YES:
+            frmcur = Frm_Crear_Profesor()
+            frmcur.dev_frm()
+        elif response == Gtk.ResponseType.NO:
+            frmcur = Frm_Crear_Nombramiento()
+            frmcur.dev_frm()
+
+        dialog.destroy()
 
     def on_btn_borrar_profesor_clicked(elf, widget):
         """
