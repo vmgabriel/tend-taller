@@ -11,6 +11,7 @@ from gi.repository import Gtk
 from view.frmListaCursos import Frm_Lista_Curso
 from view.frmListaProfesor import Frm_Lista_Profesor
 from view.frmCrearCurso import Frm_Crear_Curso
+from view.frmCrearEstudiante import Frm_Crear_Estudiante
 
 class Frm_Principal_Profesor(Gtk.Window):
     """
@@ -162,7 +163,19 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        print("3")
+        dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+            Gtk.ButtonsType.YES_NO, "Estudiante Graduado")
+        dialog.format_secondary_text(
+            "Está el estudiante Graduado?")
+        response = dialog.run()
+        if response == Gtk.ResponseType.YES:
+            frmprof = Frm_Lista_Profesor("crear_estudiante")
+            frmprof.dev_frm()
+        elif response == Gtk.ResponseType.NO:
+            frmcur = Frm_Crear_Estudiante()
+            frmcur.dev_frm()
+
+        dialog.destroy()
 
     def on_btn_borrar_estudiante_clicked(elf, widget):
         """

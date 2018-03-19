@@ -34,9 +34,9 @@ CREATE TABLE "profesor"
 (
   "id_profesor" INTEGER NOT NULL,
   "nombre1" VARCHAR(50) NOT NULL,
-  "nombre2" VARCHAR(50) NOT NULL,
+  "nombre2" VARCHAR(50) NULL,
   "apellido1" VARCHAR(50) NOT NULL,
-  "apellido2" VARCHAR(50) NOT NULL,
+  "apellido2" VARCHAR(50) NULL,
   "edad" INTEGER NOT NULL,
   "lugar_nacimiento" INTEGER NOT NULL, /*Ciudad*/
   "ciudad_residencia" INTEGER NOT NULL,
@@ -74,9 +74,9 @@ CREATE TABLE "estudiante"
 (
   "id_estudiante" INTEGER NOT NULL,
   "nombre1" VARCHAR(50) NOT NULL,
-  "nombre2" VARCHAR(50) NOT NULL,
+  "nombre2" VARCHAR(50) NULL,
   "apellido1" VARCHAR(50) NOT NULL,
-  "apellido2" VARCHAR(50) NOT NULL,
+  "apellido2" VARCHAR(50) NULL,
   "edad" INTEGER NOT NULL,
   "lugar_nacimiento" INTEGER NOT NULL, /*Ciudad*/
   "ciudad_residencia" INTEGER NOT NULL,
