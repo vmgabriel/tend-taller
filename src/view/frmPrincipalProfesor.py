@@ -10,11 +10,11 @@ from gi.repository import Gtk
 
 class Frm_Principal_Profesor(Gtk.Window):
     """
-    Clase en la que se va a poder seleccionar el rol
+    Formulario principal del profesor
     """
     def __init__(self):
         """
-        Construtor de la clase Frm_Rol, enfocado a la vista
+        Construtor de la clase Frm_Principal_Profesor, enfocado a la vista
         """
         self.titulo = "Menu de Profesor"
         Gtk.Window.__init__(self, title=self.titulo)
@@ -78,7 +78,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def box4(self):
         """
-        Construccion de la caja 4, caja media 3 que va a albergar un boton
+        Construccion de la caja 4, caja media 3 que va a albergar un boton sobre el profesor
 
         @return: Caja con boton dentro
         @rtype: Gtk.Box
@@ -142,7 +142,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_crear_curso_clicked(self, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de crear curso
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
@@ -151,7 +151,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_crear_estudiante_clicked(self, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de crear estudiante
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
@@ -160,7 +160,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_borrar_estudiante_clicked(elf, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de borrar estudiante
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
@@ -169,7 +169,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_crear_profesor_clicked(elf, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de crear profesor
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
@@ -178,7 +178,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_borrar_profesor_clicked(elf, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de borrar profesor
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
@@ -187,7 +187,7 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_modificar_profesor_clicked(elf, widget):
         """
-        Evento para btn de lista de cursos
+        Evento para btn de modificar profesor
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
