@@ -12,15 +12,17 @@ class Frm_Lista_Estudiante(Gtk.Window):
     """
     Clase de la lista de los estudiantes
     """
-    def __init__(self):
+    def __init__(self, formulario_siguiente):
         """
         Construtor de la clase Frm_Lista_Estudiante, enfocado a la vista
 
         @param formulario_siguiente: Formulario que estara cargado despues de la seleccion
         @type formulario_siguiente: str
         """
+        self.formulario_siguiente = formulario_siguiente
         self.titulo = "Lista de Estudiantes"
         Gtk.Window.__init__(self, title=self.titulo)
+        self.id_estudiante = 0
 
     def box1(self):
         """
@@ -66,7 +68,10 @@ class Frm_Lista_Estudiante(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_borrar = Gtk.Button(label="Borrar")
+        if (self.formulario_siguiente == "crear_horario"):
+            self.btn_borrar = Gtk.Button(label="Seleccionar")
+        else:
+            self.btn_borrar = Gtk.Button(label="Borrar")
         self.btn_borrar.connect("clicked", self.on_btn_borrar_clicked)
         box_p.pack_end(self.btn_borrar, True, True, 0)
 
@@ -134,14 +139,27 @@ class Frm_Lista_Estudiante(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
-            Gtk.ButtonsType.YES_NO, "Eliminar Estudiante")
-        dialog.format_secondary_text(
-            "Está seguro que desea eliminar estudiante, los datos no se recuperarán?")
-        response = dialog.run()
-        if response == Gtk.ResponseType.YES:
-            print("eliminado")
-        elif response == Gtk.ResponseType.NO:
-            print("menos mal")
+        if (self.formulario_siguinte == "crear_horario"):
+            self.id_estudiante = 1
+            self.destroy()
+        else:
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+                                       Gtk.ButtonsType.YES_NO, "Eliminar Estudiante")
+            dialog.format_secondary_text(
+                "Está seguro que desea eliminar estudiante, los datos no se recuperarán?")
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                print("eliminado")
+            elif response == Gtk.ResponseType.NO:
+                print("menos mal")
 
-        dialog.destroy()
+                dialog.destroy()
+
+    def get_seleccion(self):
+        """
+        Retorna el valor de la seleccion de la lista aqui mostrada y con ello tomar decisiones
+
+        @return: Valor de id_estudiante que se seleccionó al oprimir
+        @rtype: int
+        """
+        return self.id_estudiante

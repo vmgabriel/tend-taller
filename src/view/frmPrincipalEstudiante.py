@@ -8,13 +8,17 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+from view.frmListaEstudiante import Frm_Lista_Estudiante
+from view.frmListaCurso import Frm_Lista_Curso
+from view.frmCrearHorario import Frm_Crear_Horario
+
 class Frm_Principal_Estudiante(Gtk.Window):
     """
     Formulario principal de estudiante
     """
     def __init__(self):
         """
-        Construtor de la clase Frm_Rol, enfocado a la vista
+        Construtor de la clase Frm_Principal_Estudiante, enfocado a la vista
         """
         self.titulo = "Menu de Profesor"
         Gtk.Window.__init__(self, title=self.titulo)
@@ -90,7 +94,9 @@ class Frm_Principal_Estudiante(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        frm_estudiante = Frm_Lista_Estudiante("crear_horario")
+        frm_curso = Frm_Lista_Curso("0", "crear_horario")
+        frm_n_horario = Frm_Crear_Horario(frm_estudiante.get_seleccion(), frm_curso.get_seleccion())
 
     def on_btn_modificar_estudiante_clicked(self):
         """

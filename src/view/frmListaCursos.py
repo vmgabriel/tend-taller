@@ -23,6 +23,7 @@ class Frm_Lista_Curso(Gtk.Window):
         Gtk.Window.__init__(self, title=self.titulo)
         self.formulario_siguiente = formulario_siguiente
         self.cod_profesor = cod_profesor
+        self.id_curso = 0
 
     def box1(self):
         """
@@ -46,7 +47,10 @@ class Frm_Lista_Curso(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_modificar = Gtk.Button(label="Modificar")
+        if (self.formulario_siguiente == "crear_horario"):
+            self.btn_modificar = Gtk.Button(label="Seleccionar")
+        else:
+            self.btn_modificar = Gtk.Button(label="Modificar")
         self.btn_modificar.connect("clicked", self.on_btn_modificar_clicked)
         box_p.pack_end(self.btn_modificar, True, True, 0)
 
@@ -97,7 +101,11 @@ class Frm_Lista_Curso(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        if (self.formulario_siguiente == "crear_horario"):
+            self.id_curso = 1
+            self.destroy()
+        else:
+            print("modificar")
 
     def on_btn_borrar_clicked(self):
         """
@@ -115,4 +123,13 @@ class Frm_Lista_Curso(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        self.destroy
+        self.destroy()
+
+    def get_seleccion(self):
+        """
+        Retorna el valor de la seleccion del formulario despues de aceptar
+
+        @return: Valor seleccionado en la lista, especificamente el id
+        @rtype: int
+        """
+        return self.id_curso
