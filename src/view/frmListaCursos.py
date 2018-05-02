@@ -94,7 +94,7 @@ class Frm_Lista_Curso(Gtk.Window):
         self.set_default_size (500, 400)
         self.show_all()
 
-    def on_btn_modificar_clicked(self):
+    def on_btn_modificar_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de curso
 
@@ -107,7 +107,7 @@ class Frm_Lista_Curso(Gtk.Window):
         else:
             print("modificar")
 
-    def on_btn_borrar_clicked(self):
+    def on_btn_borrar_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de curso
 
@@ -116,7 +116,7 @@ class Frm_Lista_Curso(Gtk.Window):
         """
         pass
 
-    def on_btn_cerrar_clicked(self):
+    def on_btn_cerrar_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de cerrar
 

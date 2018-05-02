@@ -114,7 +114,7 @@ class Frm_Lista_Estudiante(Gtk.Window):
         self.set_default_size (500, 400)
         self.show_all()
 
-    def on_btn_semestre_siguiente_clicked(self):
+    def on_btn_semestre_siguiente_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de Estudiante
 
@@ -123,7 +123,7 @@ class Frm_Lista_Estudiante(Gtk.Window):
         """
         pass
 
-    def on_btn_semestre_anterior_clicked(self):
+    def on_btn_semestre_anterior_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de Estudiante
 
@@ -132,7 +132,7 @@ class Frm_Lista_Estudiante(Gtk.Window):
         """
         pass
 
-    def on_btn_borrar_clicked(self):
+    def on_btn_borrar_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de Estudiante
 

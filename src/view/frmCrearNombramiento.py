@@ -26,12 +26,12 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         self.modificar = False
 
     def load(self, profesor):
-        """
-        Carga los datos para su posterior modificacion
+        """Carga los datos para su posterior modificacion
 
         @param profesor: Datos referentes al profesor
 
         @type profesor: Profesor
+
         """
         self.profesor = profesor
         self.modificar = True
@@ -96,7 +96,7 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         box_p.pack_end(self.btn_guardar, True, True, 0)
 
         self.btn_borrar = Gtk.Button(label="Borrar")
-        self.btn_borrar.connect("clicked", self.on_btn_borrar_clicked)
+        self.btn_bOrrar.connect("clicked", self.on_btn_borrar_clicked)
         box_p.pack_end(self.btn_borrar, True, True, 0)
 
         self.btn_salir = Gtk.Button(label="Salir")

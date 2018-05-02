@@ -32,7 +32,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
         self.txt_cod = Gtk.Entry()
         box_p.pack_end(self.txt_cod, True, True, 1)
 
-        self.lbl_cod = Gtk.Label("Ingrese Codigo:")
+        self.lbl, widget_cod = Gtk.Label("Ingrese Codigo:")
         box_p.pack_end(self.lbl_cod, False, False, 1)
 
         return box_p
@@ -323,7 +323,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
         self.show_all()
 
 
-    def on_cb_lug_nacimiento_changed(self):
+    def on_cb_lug_nacimiento_changed(self, widget):
         """
         Evento para combobox cuando este cambia
 
@@ -332,7 +332,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
         """
         pass
 
-    def on_cb_lug_residencia_changed(self):
+    def on_cb_lug_residencia_changed(self, widget):
         """
         Evento para combobox cuando este cambia
 

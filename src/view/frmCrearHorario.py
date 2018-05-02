@@ -31,7 +31,7 @@ class Frm_Crear_Horario(Gtk.Window):
         """
         Construccion de la caja1, caja superior que va a reunir los datos acerca del horario
 
-        @return Caja con comboBox Adentro
+        @return: Caja con comboBox Adentro
         @rtype: Gtk.Box
         """
         box_p = Gtk.Box(spacing=6)

@@ -9,7 +9,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from view.frmListaEstudiante import Frm_Lista_Estudiante
-from view.frmListaCurso import Frm_Lista_Curso
+from view.frmListaCursos import Frm_Lista_Curso
 from view.frmCrearHorario import Frm_Crear_Horario
 
 class Frm_Principal_Estudiante(Gtk.Window):
@@ -20,7 +20,7 @@ class Frm_Principal_Estudiante(Gtk.Window):
         """
         Construtor de la clase Frm_Principal_Estudiante, enfocado a la vista
         """
-        self.titulo = "Menu de Profesor"
+        self.titulo = "Menu de Estudiante"
         Gtk.Window.__init__(self, title=self.titulo)
 
     def box1(self):
@@ -87,7 +87,7 @@ class Frm_Principal_Estudiante(Gtk.Window):
         self.show_all()
         frm.destroy()
 
-    def on_btn_crear_horario_clicked(self):
+    def on_btn_crear_horario_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de profesor
 
@@ -95,10 +95,12 @@ class Frm_Principal_Estudiante(Gtk.Window):
         @type widget: Gtk.Widget
         """
         frm_estudiante = Frm_Lista_Estudiante("crear_horario")
+        frm_estudiante.dev_frm()
         frm_curso = Frm_Lista_Curso("0", "crear_horario")
+        frm_curso.dev_frm()
         frm_n_horario = Frm_Crear_Horario(frm_estudiante.get_seleccion(), frm_curso.get_seleccion())
 
-    def on_btn_modificar_estudiante_clicked(self):
+    def on_btn_modificar_estudiante_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de profesor
 

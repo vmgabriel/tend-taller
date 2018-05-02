@@ -111,18 +111,12 @@ class Frm_Lista_Profesor(Gtk.Window):
     def on_btn_facultad_siguiente_clicked(self):
         """
         Evento que funciona al accionar el boton de profesor
-
-        @param widget: Widget que esta relacionado al evento
-        @type widget: Gtk.Widget
         """
         pass
 
     def on_btn_facultad_anterior_clicked(self):
         """
         Evento que funciona al accionar el boton de profesor
-
-        @param widget: Widget que esta relacionado al evento
-        @type widget: Gtk.Widget
         """
         pass
 

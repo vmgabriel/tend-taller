@@ -13,10 +13,6 @@ class Estudiante(Persona):
     def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, semestre):
         """
         Constructor de estudiante, tiene datos de persona, quien es su super-clase
-
-        @param is_graduado: Dato de si esta graduado o no
-
-        @type is_graduado: bool
         """
         Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia)
         self.semestre = semestre
@@ -63,7 +59,7 @@ class Estudiante(Persona):
         """
         Modifica y relaciona el horario dado
 
-        @param planificion: Horario que se va a vincular a estudiante
-        @type planificion: Horario
+        @param horario: Horario que se va a vincular a estudiante
+        @type horario: Horario
         """
         self.horario = horario

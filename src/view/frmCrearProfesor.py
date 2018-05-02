@@ -403,7 +403,7 @@ class Frm_Crear_Profesor(Gtk.Window):
         self.show_all()
 
 
-    def on_cb_lug_nacimiento_changed(self):
+    def on_cb_lug_nacimiento_changed(self, widget):
         """
         Evento para combobox cuando este cambia
 
@@ -412,7 +412,7 @@ class Frm_Crear_Profesor(Gtk.Window):
         """
         pass
 
-    def on_cb_departamento_changed(self):
+    def on_cb_departamento_changed(self, widget):
         """
         Evento para combobox cuando este cambia
 
@@ -421,7 +421,7 @@ class Frm_Crear_Profesor(Gtk.Window):
         """
         pass
 
-    def on_cb_lug_residencia_changed(self):
+    def on_cb_lug_residencia_changed(self, widget):
         """
         Evento para combobox cuando este cambia
 

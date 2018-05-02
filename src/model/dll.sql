@@ -79,7 +79,7 @@ CREATE TABLE "estudiante"
   "apellido2" VARCHAR(50) NULL,
   "edad" INTEGER NOT NULL,
   "lugar_nacimiento" INTEGER NOT NULL, /*Ciudad*/
-  "ciudad_residencia" INTEGER NOT NULL,
+  "ciudad_residencia" INTEGER NOT NULL, /*Ciudad*/
   "direccion_residencia" VARCHAR(150) NOT NULL,
   "semestre" INTEGER NOT NULL,
   "consejero" INTEGER NULL /*Profesor*/
@@ -128,3 +128,12 @@ ALTER TABLE "estudiante" ADD CONSTRAINT "FK_estudiante_ciuResidencia"
 
 ALTER TABLE "estudiante" ADD CONSTRAINT "FK_estudiante_profesor"
   FOREIGN KEY ("consejero") REFERENCES "profesor" ("id_profesor") ON DELETE No Action ON UPDATE No Action;
+
+
+/* Insertar Datos */
+
+/* Creacion de una nueva ciudad  */
+INSERT INTO "ciudad"(nombre, descripcion) VALUES ('Bogota', 'Ciudad capital central en Colombia');
+
+/* Creacuion de un estudiante  */
+INSERT INTO "estudiante"(id_estudiante, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, semestre) VALUES (1231231231, 'Juan', 'Pablo','Montoya', 'Rodriguez', 21, 1, 1, 'Calle desalojada 123', 9);
