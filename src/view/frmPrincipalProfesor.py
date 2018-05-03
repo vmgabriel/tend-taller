@@ -168,14 +168,14 @@ class Frm_Principal_Profesor(Gtk.Window):
         dialog.format_secondary_text(
             "Está el estudiante Graduado?")
         response = dialog.run()
+        dialog.destroy()
         if response == Gtk.ResponseType.YES:
             frmprof = Frm_Lista_Profesor("crear_estudiante")
             frmprof.dev_frm()
+            frmprof.cargar_datos()
         elif response == Gtk.ResponseType.NO:
             frmcur = Frm_Crear_Estudiante()
             frmcur.dev_frm()
-
-        dialog.destroy()
 
     def on_btn_borrar_estudiante_clicked(self, widget):
         """

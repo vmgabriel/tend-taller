@@ -7,6 +7,8 @@
 from model.Persona import Persona
 from model.Estudiante import Estudiante
 from model.Profesor import Profesor
+
+# Conexion con la base de datos
 from model.conector import Conexion
 
 class Persona_service:

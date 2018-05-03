@@ -8,14 +8,18 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+# Model
+from model.Estudiante import Estudiante
+
 class Frm_Crear_Estudiante(Gtk.Window):
     """
     Clase en la que se va a poder crear o modificar estudiante
     """
-    def __init__(self):
+    def __init__(self, profesor=None):
         """
         Construtor de la clase Frm_Crear_Estudiante, enfocado a la vista
         """
+        self.profesor = profesor
         self.titulo = "Crear Estudiante"
         Gtk.Window.__init__(self, title=self.titulo)
 
@@ -58,24 +62,6 @@ class Frm_Crear_Estudiante(Gtk.Window):
     def box3(self):
         """
         Construccion de la caja 3, caja intermedia que va a dato acerca del estudiante
-        enfocado en el nombre 1 del estudiante
-
-        @return: Caja con boton dentro
-        @rtype: Gtk.Box
-        """
-        box_p = Gtk.Box(spacing=6)
-
-        self.txt_nombre1 = Gtk.Entry()
-        box_p.pack_end(self.txt_nombre1, True, True, 1)
-
-        self.lbl_nombre1 = Gtk.Label("Ingrese Nombre1:")
-        box_p.pack_end(self.lbl_nombre1, False, False, 1)
-
-        return box_p
-
-    def box4(self):
-        """
-        Construccion de la caja 4, caja intermedia que va a dato acerca del estudiante
         enfocado en el nombre 2 del estudiante
 
         @return: Caja con boton dentro
@@ -91,9 +77,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box5(self):
+    def box4(self):
         """
-        Construccion de la caja 5, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 4, caja intermedia que va a dato acerca del estudiante
         enfocado en el Apellido 1 del estudiante
 
         @return: Caja con boton dentro
@@ -109,9 +95,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box6(self):
+    def box5(self):
         """
-        Construccion de la caja 6, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 5, caja intermedia que va a dato acerca del estudiante
         enfocado en el Apellido 2 del estudiante
 
         @return: Caja con boton dentro
@@ -127,9 +113,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box7(self):
+    def box6(self):
         """
-        Construccion de la caja 7, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 6, caja intermedia que va a dato acerca del estudiante
         enfocado en la edad del estudiante
 
         @return: Caja con boton dentro
@@ -145,9 +131,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box8(self):
+    def box7(self):
         """
-        Construccion de la caja 8, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 7, caja intermedia que va a dato acerca del estudiante
         enfocado en el lugar de nacimiento del estudiante
 
         @return: Caja con boton dentro
@@ -174,9 +160,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box9(self):
+    def box8(self):
         """
-        Construccion de la caja 9, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 8, caja intermedia que va a dato acerca del estudiante
         enfocado en el lugar de residencia del estudiante
 
         @return: Caja con boton dentro
@@ -203,9 +189,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box10(self):
+    def box9(self):
         """
-        Construccion de la caja 10, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 9, caja intermedia que va a dato acerca del estudiante
         enfocado en la direccion de residencia del estudiante
 
         @return: Caja con boton dentro
@@ -221,9 +207,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box11(self):
+    def box10(self):
         """
-        Construccion de la caja 11, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 10, caja intermedia que va a dato acerca del estudiante
         enfocado en la semestre del estudiante
 
         @return: Caja con boton dentro
@@ -239,9 +225,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box12(self):
+    def box11(self):
         """
-        Construccion de la caja 12, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 11, caja intermedia que va a dato acerca del estudiante
         enfocado en el usuario del estudiante
 
         @return: Caja con boton dentro
@@ -257,9 +243,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box13(self):
+    def box12(self):
         """
-        Construccion de la caja 13, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 12, caja intermedia que va a dato acerca del estudiante
         enfocado en la contraseña del estudiante
 
         @return: Caja con boton dentro
@@ -275,9 +261,9 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         return box_p
 
-    def box14(self):
+    def box13(self):
         """
-        Construccion de la caja 14, caja final, da a los botones
+        Construccion de la caja 13, caja final, da a los botones
 
         @return: Caja con boton dentro
         @rtype: Gtk.Box
@@ -306,9 +292,6 @@ class Frm_Crear_Estudiante(Gtk.Window):
         @rtype: Gtk.Box
         """
         box_p = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-
-        box14 = self.box14()
-        box_p.pack_end(box14, True, True, 0)
 
         box13 = self.box13()
         box_p.pack_end(box13, True, True, 0)
@@ -390,7 +373,20 @@ class Frm_Crear_Estudiante(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        if (self.txt_cod.get_text() == "" or self.txt_nombre1.get_text() == "" or self.txt_apellido1.get_text() == ""
+            or self.txt_edad.get_text() == "" or self.txt_residencia.get_text() == "" or self.txt_semestre.get_text() == ""
+            or self.txt_usuario.get_text() == "" or self.txt_contra.get_text() == ""):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                       Gtk.ButtonsType.CANCEL, "Datos no Introducidos")
+            dialog.format_secondary_text(
+                "Uno o mas datos no han sido introducidos")
+            dialog.run()
+            dialog.destroy()
+        else:
+            ide = int(self.txt_cod.get_text())
+            edad = int(self.txt_edad.get_text())
+            #TODO: implementar la obtencion del codigo
+            nuevo_estudiante = Estudiante(ide, self.txt_nombre1.get_text(), self.txt_nombre1.get_text(), self.txt_nombre2.get_text(), self.txt_apellido1.get_text(), self.txt_apellido2.get_text(), edad,)
 
     def on_btn_borrar_clicked(self, widget):
         """
@@ -399,7 +395,17 @@ class Frm_Crear_Estudiante(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        self.txt_cod.set_text("")
+        self.txt_nombre1.set_text("")
+        self.txt_nombre2.set_text("")
+        self.txt_apellido1.set_text("")
+        self.txt_apellido2.set_text("")
+        self.txt_edad.set_text("")
+        self.txt_residencia.set_text("")
+        self.txt_semestre.set_text("")
+        self.txt_usuario.set_text("")
+        self.txt_contra.set_text("")
+        self.txt_cod.grab_focus_without_selecting()
 
     def on_btn_salir_clicked(self, widget):
         """

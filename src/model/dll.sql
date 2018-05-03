@@ -145,5 +145,11 @@ INSERT INTO "estudiante"(id_estudiante, nombre1, nombre2, apellido1, apellido2, 
 /* Creacion de un departamento */
 INSERT INTO "departamento"(nombre, telefono, id_ciudad) VALUES ('Ingeniería', 1234556, 1);
 
+INSERT INTO "departamento"(nombre, telefono, id_ciudad) VALUES ('Artes', 8765433, 1);
+
 /* Creacion de un profesor */
 INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1010101010, 'Juan', 'Manuel', 'Santos', 'Calderon', 30, 1, 1, 'calle 123', True, 'PHd. Universidad Hardvard', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',1,'profe1','profe1');
+
+INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1212121212, 'Pablo', 'Santiago', 'Prieto', 'Rozo', 31, 1, 1, 'calle 124', True, 'PHd. Universidad Hardvard', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',1,'profe2','profe2');
+
+INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1312121212, 'Danna', 'Valeria', 'Sanchez', 'Rodriguez', 28, 1, 1, 'calle 1 d22', True, 'Licenciada de Universidad Distrital', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',2,'profe3','profe3');

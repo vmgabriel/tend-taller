@@ -11,10 +11,16 @@ from gi.repository import Gtk
 import time
 from datetime import date
 
+# Model
 from model.Profesor import Profesor
 from model.Ciudad import Ciudad
 
+# Controller
+from controller.Profesor import Profesor_service
+
+#view
 from view.frmCrearNombramiento import Frm_Crear_Nombramiento
+from view.frmCrearEstudiante import Frm_Crear_Estudiante
 
 class Frm_Lista_Profesor(Gtk.Window):
     """
@@ -30,6 +36,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         self.titulo = "Lista de Profesores"
         Gtk.Window.__init__(self, title=self.titulo)
         self.formulario_siguiente = formulario_siguiente
+        self.modelo_mostrar = ["id", "Nombre", "Apellido 1", "Apellido 2", "Facultad"]
 
     def box1(self):
         """
@@ -37,13 +44,22 @@ class Frm_Lista_Profesor(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        software_liststore = Gtk.ListStore(int, str, str, str)
-        treeview = Gtk.TreeView.new_with_model(software_liststore.filter_new())
+        self.software_liststore = Gtk.ListStore(int, str, str, str, int)
 
-        scrollable_treelist = Gtk.ScrolledWindow()
-        scrollable_treelist.set_vexpand(True)
-        box_p.pack_end(scrollable_treelist, True, True, 0)
-        scrollable_treelist.add(treeview)
+        self.cargar_datos()
+        self.matriz_to_liststore(self.filtro_parametros(self.datos))
+
+        self.language_filter = self.software_liststore.filter_new()
+        self.language_filter.set_visible_func(self.seleccionar_facultad)
+
+        self.treeview = Gtk.TreeView.new_with_model(self.language_filter)
+
+        for i, column_title in enumerate(self.modelo_mostrar):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            self.treeview.append_column(column)
+
+        box_p.pack_end(self.treeview, True, True, 0)
 
         return box_p
 
@@ -108,17 +124,90 @@ class Frm_Lista_Profesor(Gtk.Window):
         self.set_default_size (500, 400)
         self.show_all()
 
-    def on_btn_facultad_siguiente_clicked(self):
+    def matriz_to_liststore(self, matriz):
         """
-        Evento que funciona al accionar el boton de profesor
-        """
-        pass
+        Convierte una matriz comun y corriente en una listStore
 
-    def on_btn_facultad_anterior_clicked(self):
+        @param matriz: Matriz que se va a convertir en listStore
+        @type matriz: <class= 'list'>
+
+        @return: listStore correspondiente de la matriz
+        @rtype: Gtk.listStore
+        """
+        for vector in matriz:
+            self.software_liststore.append(list(vector))
+
+    def filtro_parametro(self, vector):
+        """
+        Fitrla los parametros del vector deseado para ser puesto
+
+        @param vector: Vector que se va a reducir
+        @type vector: tuple
+
+        @return: Vector reducido
+        @rtype: tuple
+        """
+        return (vector[0],vector[1], vector[3], vector[4], vector[14])
+
+    def filtro_parametros(self, matriz):
+        """
+        Filtra los parametros necesarios, no mas no menos
+
+        @param matriz: Matriz que se va a reducir
+        @type matriz: <class= 'list'>
+
+        @return: Matriz reducida con los parametros necesarios
+        @rtype: <class= 'list'>
+        """
+        return list(map(self.filtro_parametro, matriz))
+
+    def seleccionar_facultad(self, model, ite, data):
+        """
+        Relacion con el metodo de filtro para el treeview
+
+        @param model: Modelo
+        @param ite: iterador
+        @param data: datos relacionados
+        """
+        if (self.facultad_actual == 0):
+            return True
+        else:
+            return model[ite][4] == self.facultad_actual
+
+    def cargar_datos(self):
+        """
+        Evento de ejecucion para cargar datos de la base de datos
+        """
+        service = Profesor_service()
+        self.facultad_actual = 0
+        self.lista_facultades = service.ver_todas_facultades()
+        self.datos = service.ver_todos()
+
+    def on_btn_facultad_siguiente_clicked(self, widget):
         """
         Evento que funciona al accionar el boton de profesor
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
         """
-        pass
+        self.facultad_actual += 1
+        if (self.facultad_actual > len(self.lista_facultades)):
+            self.facultad_actual = 0
+
+        self.language_filter.refilter()
+
+    def on_btn_facultad_anterior_clicked(self, widget):
+        """
+        Evento que funciona al accionar el boton de profesor
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
+        """
+        self.facultad_actual -= 1
+        if (self.facultad_actual < 0):
+            self.facultad_actual = len(self.lista_facultades)
+
+        self.language_filter.refilter()
 
     def on_btn_seleccionar_clicked(self, widget):
         """
@@ -130,9 +219,17 @@ class Frm_Lista_Profesor(Gtk.Window):
         if (self.formulario_siguiente == "lista_curso"):
             print("seleccionado {}".format(self.formulario_siguiente))
         elif (self.formulario_siguiente == "crear_estudiante"):
-            print("seleccionado {}".format(self.formulario_siguiente))
+            # Estudiante Graduado
+            select = self.treeview.get_selection()
+
+            (model, ite) = select.get_selected()
+            id_seleccionado = model.get_value(ite, 0)
+
+            frm_siguiente = Frm_Crear_Estudiante(id_seleccionado)
+            frm_siguiente.dev_frm()
+            self.destroy()
         elif (self.formulario_siguiente == "modificar_profesor"):
-            #seleccionar y consultar los datos para su posteorior seleccion
+            # seleccionar y consultar los datos para su posteorior seleccion
             prof = Profesor(123, "Pedro", "Andres", "Paramo", "Diaz", 23, Ciudad("", ""), Ciudad("", ""), "calle", "Doctor", "contratista", True, date(2010,10,10), date(2012,12,12))
             if (prof.is_visitante):
                 frm = Frm_Crear_Nombramiento()
