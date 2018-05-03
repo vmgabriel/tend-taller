@@ -32,7 +32,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
         self.txt_cod = Gtk.Entry()
         box_p.pack_end(self.txt_cod, True, True, 1)
 
-        self.lbl, widget_cod = Gtk.Label("Ingrese Codigo:")
+        self.lbl_cod = Gtk.Label("Ingrese Codigo:")
         box_p.pack_end(self.lbl_cod, False, False, 1)
 
         return box_p
@@ -223,7 +223,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
     def box11(self):
         """
-        Construccion de la caja 10, caja intermedia que va a dato acerca del estudiante
+        Construccion de la caja 11, caja intermedia que va a dato acerca del estudiante
         enfocado en la semestre del estudiante
 
         @return: Caja con boton dentro
@@ -241,7 +241,43 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
     def box12(self):
         """
-        Construccion de la caja 12, caja final, da a los botones
+        Construccion de la caja 12, caja intermedia que va a dato acerca del estudiante
+        enfocado en el usuario del estudiante
+
+        @return: Caja con boton dentro
+        @rtype: Gtk.Box
+        """
+        box_p = Gtk.Box(spacing=6)
+
+        self.txt_usuario = Gtk.Entry()
+        box_p.pack_end(self.txt_usuario, True, True, 1)
+
+        self.lbl_usuario = Gtk.Label("Ingrese Usuario:")
+        box_p.pack_end(self.lbl_usuario, False, False, 1)
+
+        return box_p
+
+    def box13(self):
+        """
+        Construccion de la caja 13, caja intermedia que va a dato acerca del estudiante
+        enfocado en la contraseña del estudiante
+
+        @return: Caja con boton dentro
+        @rtype: Gtk.Box
+        """
+        box_p = Gtk.Box(spacing=6)
+
+        self.txt_contra = Gtk.Entry()
+        box_p.pack_end(self.txt_contra, True, True, 1)
+
+        self.lbl_contra = Gtk.Label("Ingrese Contraseña:")
+        box_p.pack_end(self.lbl_contra, False, False, 1)
+
+        return box_p
+
+    def box14(self):
+        """
+        Construccion de la caja 14, caja final, da a los botones
 
         @return: Caja con boton dentro
         @rtype: Gtk.Box
@@ -270,6 +306,12 @@ class Frm_Crear_Estudiante(Gtk.Window):
         @rtype: Gtk.Box
         """
         box_p = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+
+        box14 = self.box14()
+        box_p.pack_end(box14, True, True, 0)
+
+        box13 = self.box13()
+        box_p.pack_end(box13, True, True, 0)
 
         box12 = self.box12()
         box_p.pack_end(box12, True, True, 0)
@@ -319,7 +361,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
 
         self.connect("delete-event", self.destroy)
         self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_default_size (600, 600)
+        self.set_default_size (600, 700)
         self.show_all()
 
 
