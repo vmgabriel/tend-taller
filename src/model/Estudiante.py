@@ -4,18 +4,31 @@
 # @author: Gabriel Vargas Monroy
 
 # Dependecias
-from Persona import Persona
+
+# Modelo
+from model.Persona import Persona
 
 class Estudiante(Persona):
     """
     Clase de los estudiantes
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, semestre):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, semestre, usuario, contra):
         """
         Constructor de estudiante, tiene datos de persona, quien es su super-clase
         """
-        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia)
+        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, usuario, contra)
         self.semestre = semestre
+
+    def __init__(self, datos):
+        """
+        Convierte una tupla y la genera en su respectiva clase, se identifica con ella para su tratamiento
+
+        @param datos: datos en forma de tupla que se obtienen de una relacion de datos
+        @type datos: tuple
+        """
+        Persona.__init__(self, datos[0][0], datos[0][1], datos[0][2], datos[0][3], datos[0][4], datos[0][5], datos[0][6], datos[0][7], datos[0][8], datos[0][11], datos[0][12])
+        self.semestre = datos[0][9]
+        self.consejero = datos[0][10]
 
     def es_is_graduado(self):
         """
@@ -36,7 +49,7 @@ class Estudiante(Persona):
         @return: Clase convertida a str
         @rtype: str
         """
-        datos_persona = Persona.__str__()
+        datos_persona = Persona.__str__(self)
         datos_estudiante = """Esta graduado?: {}
         """.format(self.es_is_graduado())
         return datos_persona + datos_estudiante

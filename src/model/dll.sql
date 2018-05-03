@@ -39,14 +39,16 @@ CREATE TABLE "profesor"
   "apellido2" VARCHAR(50) NULL,
   "edad" INTEGER NOT NULL,
   "lugar_nacimiento" INTEGER NOT NULL, /*Ciudad*/
-  "ciudad_residencia" INTEGER NOT NULL,
+  "ciudad_residencia" INTEGER NOT NULL, /*Ciudad*/
   "direccion_residencia" VARCHAR(150) NOT NULL,
   "es_visitante" BOOLEAN NOT NULL,
   "titulo" VARCHAR(300) NOT NULL,
   "contrato" VARCHAR(200) NOT NULL,
   "inicio_nombramiento" DATE NULL,
   "fin_nombramiento" DATE NULL,
-  "facultad" INTEGER NOT NULL
+  "facultad" INTEGER NOT NULL, /*Departamento*/
+  "contra" VARCHAR(50) NOT NULL,
+  "usuario" VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE "curso"
@@ -82,7 +84,9 @@ CREATE TABLE "estudiante"
   "ciudad_residencia" INTEGER NOT NULL, /*Ciudad*/
   "direccion_residencia" VARCHAR(150) NOT NULL,
   "semestre" INTEGER NOT NULL,
-  "consejero" INTEGER NULL /*Profesor*/
+  "consejero" INTEGER NULL, /*Profesor*/
+  "contra" VARCHAR(50) NOT NULL,
+  "usuario" VARCHAR(50) NOT NULL
 );
 
 /* Create Primary Key, Indexes, Uniques, Checks */
@@ -135,5 +139,11 @@ ALTER TABLE "estudiante" ADD CONSTRAINT "FK_estudiante_profesor"
 /* Creacion de una nueva ciudad  */
 INSERT INTO "ciudad"(nombre, descripcion) VALUES ('Bogota', 'Ciudad capital central en Colombia');
 
-/* Creacuion de un estudiante  */
-INSERT INTO "estudiante"(id_estudiante, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, semestre) VALUES (1231231231, 'Juan', 'Pablo','Montoya', 'Rodriguez', 21, 1, 1, 'Calle desalojada 123', 9);
+/* Creacion de un estudiante  */
+INSERT INTO "estudiante"(id_estudiante, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, semestre, contra, usuario) VALUES (1231231231, 'Juan', 'Pablo','Montoya', 'Rodriguez', 21, 1, 1, 'Calle desalojada 123', 9, '123', '123');
+
+/* Creacion de un departamento */
+INSERT INTO "departamento"(nombre, telefono, id_ciudad) VALUES ('Ingeniería', 1234556, 1);
+
+/* Creacion de un profesor */
+INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1010101010, 'Juan', 'Manuel', 'Santos', 'Calderon', 30, 1, 1, 'calle 123', True, 'PHd. Universidad Hardvard', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',1,'profe1','profe1');

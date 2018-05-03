@@ -53,7 +53,7 @@ class Conexion:
             cur.execute(query, iny)
             self.conn.commit()
             cur.close()
-        except psycopg2.DatabaseError, e:
+        except psycopg2.DatabaseError as e:
             if self.conn:
                 self.conn.rollback()
 
@@ -79,7 +79,7 @@ class Conexion:
             datos = cur.fetchall()
             cur.close()
             return datos
-        except psycopg2.DatabaseError, e:
+        except psycopg2.DatabaseError as e:
             if self.conn:
                 self.conn.rollback()
 

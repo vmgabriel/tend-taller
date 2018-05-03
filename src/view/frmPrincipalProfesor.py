@@ -20,11 +20,12 @@ class Frm_Principal_Profesor(Gtk.Window):
     """
     Formulario principal del profesor
     """
-    def __init__(self):
+    def __init__(self, sesion):
         """
         Construtor de la clase Frm_Principal_Profesor, enfocado a la vista
         """
         self.titulo = "Menu de Profesor"
+        self.sesion = sesion
         Gtk.Window.__init__(self, title=self.titulo)
 
     def box1(self):
@@ -122,13 +123,10 @@ class Frm_Principal_Profesor(Gtk.Window):
 
         return box_p
 
-    def dev_frm(self, frm):
+    def dev_frm(self):
         """
         Enfocado en la construccion de cada una de las partes del formulario
         este funcionara cargando la caja principal y mostrando algunas propiedades del mismo
-
-        @param frm: formulario anterior para su posterior cierre
-        @type frm: Gtk.Windows
         """
         index = self.index_box()
         self.add(index)
@@ -137,7 +135,6 @@ class Frm_Principal_Profesor(Gtk.Window):
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_default_size (600, 600)
         self.show_all()
-        frm.destroy()
 
     def on_btn_lista_curso_clicked(self, widget):
         """

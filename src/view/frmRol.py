@@ -8,8 +8,12 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+# Vista
 from view.frmPrincipalProfesor import Frm_Principal_Profesor
 from view.frmPrincipalEstudiante import Frm_Principal_Estudiante
+
+# Controlador -> servicios
+from controller.Persona import Persona_service
 
 class Frm_Rol(Gtk.Window):
     """
@@ -120,7 +124,24 @@ class Frm_Rol(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        service = Persona_service()
+        usuario = service.login(self.txt_usuario.get_text(), self.txt_contra.get_text())
+        frm = None
+        if (usuario[0] == 0):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                       Gtk.ButtonsType.CANCEL, "Error de Autenticacion")
+            dialog.format_secondary_text(
+                "Error de inicio de sesion!!, Usuario o Contraseña no son correctos")
+            dialog.run()
+            dialog.destroy()
+        elif (usuario[0] == 1):
+            frm = Frm_Principal_Estudiante(usuario[1])
+        else:
+            frm = Frm_Principal_Profesor(usuario[1])
+        if (frm):
+            frm.dev_frm()
+            self.destroy()
+
 
     def on_btn_borrar_clicked(self, widget):
         """

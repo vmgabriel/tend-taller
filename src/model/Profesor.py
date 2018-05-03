@@ -13,7 +13,7 @@ class Profesor(Persona):
     """
     Clase de Profesor
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, titulo, contrato, is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
+    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, titulo, contrato, usuario, contra ,is_visitante = False, ini_nombramiento = None, fin_nombramiento = None):
         """
         Constructor de clase de Profesor
 
@@ -29,7 +29,7 @@ class Profesor(Persona):
         @type ini_nombramiento: datetime
         @type fin_nombramiento: datetime
         """
-        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia)
+        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, usuario, contra)
         self.is_visitante = is_visitante
         self.contrato = contrato
         self.titulo = titulo
@@ -37,6 +37,22 @@ class Profesor(Persona):
         if (is_visitante):
             self.inicio_nombramiento = ini_nombramiento
             self.fin_nombramiento = fin_nombramiento
+
+    def __init__(self, datos):
+        """
+        Constructor especificado para la implementacion directa de diseño de labase de datos a traves de la tupla
+
+        @param datos: Tupla con los datos del profesor listos para ser identificados en la clase
+        @type datos: tuple
+        """
+        Persona.__init__(self, datos[0][0], datos[0][1], datos[0][2], datos[0][3], datos[0][4], datos[0][5],
+                         datos[0][6], datos[0][7], datos[0][8], datos[0][16], datos[0][15])
+        self.is_visitante = datos[0][9]
+        self.titulo = datos[0][10]
+        self.contrato = datos[0][11]
+        self.inicio_nombramiento = datos[0][12]
+        self.fin_nombramiento = datos[0][13]
+        self.departamento = datos[0][14]
 
     def es_is_visitante(self):
         """
