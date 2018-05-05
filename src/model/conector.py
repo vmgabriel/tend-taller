@@ -34,7 +34,7 @@ class Conexion:
         Datos dispositivo actual
         """
 
-    def enviar_registro(self, estructura, datos):
+    def enviar_registro(self, query):
         """
         Una consulta caracterizada por el envio de informacion, nada de traer datos, ya que si existe algu tipo de error este funcionara de esa manera
         - estructura funciona de la siguiente manera: "insert into people values (%s, %s)"
@@ -44,14 +44,14 @@ class Conexion:
         @param estructura: Variable caracteristica que enfoca en enviar la consulta como un string, se  nota que este archivo funciona como puente, ademas es una estructura de la misma, para que ella la reconozca
         @type estructura: str
 
-        @param datos: Datos que van a ser tomados para ser ingresados en la estructura ingresada como parametro 1
-        @type datos: <class ="tuple">
+        @return: Valor 1 o 0 segun sea el caso de ingreso
+        @rtype: int
         """
         try:
             self.conector()
             cur = self.conn.cursor()
-            cur.execute(query, iny)
-            self.conn.commit()
+            cur.execute(query)
+            valor = self.conn.commit()
             cur.close()
         except psycopg2.DatabaseError as e:
             if self.conn:
@@ -61,6 +61,7 @@ class Conexion:
             sys.exit(1)
         finally:
             self.conn.close()
+        return valor
 
     def enviar_consulta(self, query):
         """

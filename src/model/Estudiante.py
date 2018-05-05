@@ -12,23 +12,22 @@ class Estudiante(Persona):
     """
     Clase de los estudiantes
     """
-    def __init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, semestre, usuario, contra):
-        """
-        Constructor de estudiante, tiene datos de persona, quien es su super-clase
-        """
-        Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, usuario, contra)
-        self.semestre = semestre
+    consejero = None
 
-    def __init__(self, datos):
+    def __init__(self, datos=None, num=0, nombre1="1", nombre2="1", apellido1="1", apellido2="1", edad=1, lug_nacimiento=1, lug_residencia=1, dir_residencia="1", semestre=1, usuario="1", contra="1"):
         """
-        Convierte una tupla y la genera en su respectiva clase, se identifica con ella para su tratamiento
+        Constructor de estudiante, tiene datos de persona, quien es su super-clase; Convierte una tupla y la genera en su respectiva clase, se identifica con ella para su tratamiento
 
         @param datos: datos en forma de tupla que se obtienen de una relacion de datos
         @type datos: tuple
         """
-        Persona.__init__(self, datos[0][0], datos[0][1], datos[0][2], datos[0][3], datos[0][4], datos[0][5], datos[0][6], datos[0][7], datos[0][8], datos[0][11], datos[0][12])
-        self.semestre = datos[0][9]
-        self.consejero = datos[0][10]
+        if (not datos):
+            Persona.__init__(self, num, nombre1, nombre2, apellido1, apellido2, edad, lug_nacimiento, lug_residencia, dir_residencia, usuario, contra)
+            self.semestre = semestre
+        else:
+            Persona.__init__(self, datos[0][0], datos[0][1], datos[0][2], datos[0][3], datos[0][4], datos[0][5], datos[0][6], datos[0][7], datos[0][8], datos[0][11], datos[0][12])
+            self.semestre = datos[0][9]
+            self.consejero = datos[0][10]
 
     def es_is_graduado(self):
         """

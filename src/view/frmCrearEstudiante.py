@@ -11,6 +11,10 @@ from gi.repository import Gtk
 # Model
 from model.Estudiante import Estudiante
 
+# Controller
+from controller.Ciudad import Ciudad_service
+from controller.Estudiante import Estudiante_service
+
 class Frm_Crear_Estudiante(Gtk.Window):
     """
     Clase en la que se va a poder crear o modificar estudiante
@@ -142,14 +146,12 @@ class Frm_Crear_Estudiante(Gtk.Window):
         box_p = Gtk.Box(spacing=6)
 
         country_store = Gtk.ListStore(str)
-        countries = ["Austria", "Brazil", "Belgium", "France", "Germany",
-            "Switzerland", "United Kingdom", "United States of America",
-            "Uruguay"]
-        for country in countries:
+        for country in list(map(self.solo_nombre_ciudad,self.lista_ciudades)):
             country_store.append([country])
 
         self.cb_lug_nacimiento = Gtk.ComboBox.new_with_model(country_store)
-        self.cb_lug_nacimiento.connect("changed", self.on_cb_lug_nacimiento_changed)
+        # self.cb_lug_nacimiento.connect("changed", self.on_cb_lug_residencia_changed)
+
         renderer_text = Gtk.CellRendererText()
         self.cb_lug_nacimiento.pack_start(renderer_text, True)
         self.cb_lug_nacimiento.add_attribute(renderer_text, "text", 0)
@@ -171,14 +173,11 @@ class Frm_Crear_Estudiante(Gtk.Window):
         box_p = Gtk.Box(spacing=6)
 
         country_store = Gtk.ListStore(str)
-        countries = ["Austria", "Brazil", "Belgium", "France", "Germany",
-            "Switzerland", "United Kingdom", "United States of America",
-            "Uruguay"]
-        for country in countries:
+        for country in list(map(self.solo_nombre_ciudad,self.lista_ciudades)):
             country_store.append([country])
 
         self.cb_lug_residencia = Gtk.ComboBox.new_with_model(country_store)
-        self.cb_lug_residencia.connect("changed", self.on_cb_lug_residencia_changed)
+        # self.cb_lug_residencia.connect("changed", self.on_cb_lug_residencia_changed)
         renderer_text = Gtk.CellRendererText()
         self.cb_lug_residencia.pack_start(renderer_text, True)
         self.cb_lug_residencia.add_attribute(renderer_text, "text", 0)
@@ -339,6 +338,8 @@ class Frm_Crear_Estudiante(Gtk.Window):
         Enfocado en la construccion de cada una de las partes del formulario
         este funcionara cargando la caja principal y mostrando algunas propiedades del mismo
         """
+        self.cargar_datos()
+
         index = self.index_box()
         self.add(index)
 
@@ -347,24 +348,23 @@ class Frm_Crear_Estudiante(Gtk.Window):
         self.set_default_size (600, 700)
         self.show_all()
 
-
-    def on_cb_lug_nacimiento_changed(self, widget):
+    def cargar_datos(self):
         """
-        Evento para combobox cuando este cambia
-
-        @param widget: Widget que esta relacionado al evento
-        @type widget: Gtk.Widget
+        Datos especificamente obtenidos de la base de datos puestos en la ciudad
         """
-        pass
+        servicio = Ciudad_service()
+        self.lista_ciudades = servicio.ver_todos()
 
-    def on_cb_lug_residencia_changed(self, widget):
+    def solo_nombre_ciudad(self, ciudad):
         """
-        Evento para combobox cuando este cambia
+        Proceso funcional para que solo se tome el nombre de la ciudad en una entrada tupla
+        @param ciudad: Tupla con datos de una sola ciudad
+        @type ciudad: tuple
 
-        @param widget: Widget que esta relacionado al evento
-        @type widget: Gtk.Widget
+        @return: datos str con el nombre de la ciudad
+        @rtype: str
         """
-        pass
+        return ciudad[1]
 
     def on_btn_guardar_clicked(self, widget):
         """
@@ -385,8 +385,30 @@ class Frm_Crear_Estudiante(Gtk.Window):
         else:
             ide = int(self.txt_cod.get_text())
             edad = int(self.txt_edad.get_text())
-            #TODO: implementar la obtencion del codigo
-            nuevo_estudiante = Estudiante(ide, self.txt_nombre1.get_text(), self.txt_nombre1.get_text(), self.txt_nombre2.get_text(), self.txt_apellido1.get_text(), self.txt_apellido2.get_text(), edad,)
+            semestre = int(int(self.txt_semestre.get_text()))
+
+            lug_nacimiento = self.lista_ciudades[self.cb_lug_nacimiento.get_active()][0]
+            ciu_residencia = self.lista_ciudades[self.cb_lug_residencia.get_active()][0]
+
+            nuevo_estudiante = Estudiante(None,ide, self.txt_nombre1.get_text(), self.txt_nombre2.get_text(), self.txt_apellido1.get_text(), self.txt_apellido2.get_text(), edad, lug_nacimiento, ciu_residencia, self.txt_residencia.get_text(), semestre, self.txt_usuario.get_text(), self.txt_contra.get_text())
+
+            if (self.profesor):
+                nuevo_estudiante.set_consejero(profesor)
+
+            service = Estudiante_service()
+            if (service.guardar(nuevo_estudiante)):
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.CANCEL, "Datos Introducidos")
+                dialog.format_secondary_text("Datos introducidos satisfactoriamente")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                           Gtk.ButtonsType.CANCEL, "Error almacenamiento de datos")
+                dialog.format_secondary_text("Error de guardado de datos en la base de datos, comuniquese con soporte tecnico")
+                dialog.run()
+                dialog.destroy()
+            self.destroy()
 
     def on_btn_borrar_clicked(self, widget):
         """
