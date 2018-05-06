@@ -177,7 +177,7 @@ class Frm_Crear_Estudiante(Gtk.Window):
             country_store.append([country])
 
         self.cb_lug_residencia = Gtk.ComboBox.new_with_model(country_store)
-        # self.cb_lug_residencia.connect("changed", self.on_cb_lug_residencia_changed)
+
         renderer_text = Gtk.CellRendererText()
         self.cb_lug_residencia.pack_start(renderer_text, True)
         self.cb_lug_residencia.add_attribute(renderer_text, "text", 0)

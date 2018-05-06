@@ -96,7 +96,7 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         box_p.pack_end(self.btn_guardar, True, True, 0)
 
         self.btn_borrar = Gtk.Button(label="Borrar")
-        self.btn_bOrrar.connect("clicked", self.on_btn_borrar_clicked)
+        self.btn_borrar.connect("clicked", self.on_btn_borrar_clicked)
         box_p.pack_end(self.btn_borrar, True, True, 0)
 
         self.btn_salir = Gtk.Button(label="Salir")
@@ -157,6 +157,7 @@ class Frm_Crear_Nombramiento(Gtk.Window):
         else:
             frm = Frm_Crear_Profesor(fi, ff)
             frm.dev_frm()
+        self.destroy()
 
     def on_btn_borrar_clicked(self, widget):
         """

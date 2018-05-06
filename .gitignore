@@ -114,3 +114,6 @@ venv.bak/
 
 # Compilado de python
 *.pyc
+
+#spacemacs
+.#*

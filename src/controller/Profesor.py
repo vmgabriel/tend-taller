@@ -42,3 +42,65 @@ class Profesor_service:
         query = "SELECT * FROM departamento;"
         consulta = self.conexion.enviar_consulta(query)
         return consulta
+
+    def guardar(self, profesor):
+        """
+        Servicio/Metodo enfocado en el guardado de los datos del profesor
+
+        @param profesor: Datos del profesor a introducir
+        @type profesor: <class= 'Profesor'>
+
+        @return: Retrna true si los datos se almacenaron correctamente
+        @rtype: boolean
+        """
+        es_visitante = "FALSE"
+        if (profesor.es_is_visitante() == "si"):
+            es_visitante = "TRUE"
+
+        query=""
+
+        f1 = f2 = "NULL"
+
+        if (profesor.inicio_nombramiento):
+            f1 = "{}-{}-{}".format(profesor.inicio_nombramiento.year, profesor.inicio_nombramiento.month, profesor.inicio_nombramiento.day)
+            f2 = "{}-{}-{}".format(profesor.fin_nombramiento.year, profesor.fin_nombramiento.month, profesor.fin_nombramiento.day)
+            query = """
+        INSERT INTO profesor(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES ({}, '{}', '{}', '{}', '{}', {}, {}, {}, '{}', {}, '{}', '{}', '{}', '{}', {}, '{}', '{}');
+        """.format(profesor.num,
+                   profesor.nombre1,
+                   profesor.nombre2,
+                   profesor.apellido1,
+                   profesor.apellido2,
+                   profesor.edad,
+                   profesor.lugar_nacimiento,
+                   profesor.ciudad_residencia,
+                   profesor.direccion_residencia,
+                   es_visitante,
+                   profesor.titulo,
+                   profesor.contrato,
+                   f1,
+                   f2,
+                   profesor.departamento,
+                   profesor.contra,
+                   profesor.usuario)
+        else:
+            query = """
+        INSERT INTO profesor(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES ({}, '{}', '{}', '{}', '{}', {}, {}, {}, '{}', {}, '{}', '{}', {}, {}, {}, '{}', '{}');
+        """.format(profesor.num,
+                   profesor.nombre1,
+                   profesor.nombre2,
+                   profesor.apellido1,
+                   profesor.apellido2,
+                   profesor.edad,
+                   profesor.lugar_nacimiento,
+                   profesor.ciudad_residencia,
+                   profesor.direccion_residencia,
+                   es_visitante,
+                   profesor.titulo,
+                   profesor.contrato,
+                   f1,
+                   f2,
+                   profesor.departamento,
+                   profesor.contra,
+                   profesor.usuario)
+        return (not self.conexion.enviar_registro(query))

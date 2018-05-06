@@ -200,10 +200,10 @@ class Frm_Principal_Profesor(Gtk.Window):
             "Es el profesor de planta?")
         response = dialog.run()
         if response == Gtk.ResponseType.YES:
-            frmcur = Frm_Crear_Profesor()
+            frmcur = Frm_Crear_Nombramiento()
             frmcur.dev_frm()
         elif response == Gtk.ResponseType.NO:
-            frmcur = Frm_Crear_Nombramiento()
+            frmcur = Frm_Crear_Profesor()
             frmcur.dev_frm()
 
         dialog.destroy()
