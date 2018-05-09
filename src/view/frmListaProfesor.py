@@ -86,9 +86,20 @@ class Frm_Lista_Profesor(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_seleccionar = Gtk.Button(label="Seleccionar")
+        if (self.formulario_siguiente == "crear_horario"):
+            self.btn_modificar = Gtk.Button(label="Modificar")
+        else:
+            self.btn_seleccionar = Gtk.Button(label="Seleccionar")
         self.btn_seleccionar.connect("clicked", self.on_btn_seleccionar_clicked)
         box_p.pack_end(self.btn_seleccionar, True, True, 0)
+
+        self.btn_borrar = Gtk.Button(label="Borrar")
+        self.btn_borrar.connect("clicked", self.on_btn_borrar_clicked)
+        box_p.pack_end(self.btn_borrar, True, True, 0)
+
+        self.btn_cerrar = Gtk.Button(label="Cerrar")
+        self.btn_cerrar.connect("clicked", self.on_btn_cerrar_clicked)
+        box_p.pack_end(self.btn_cerrar, True, True, 0)
 
         return box_p
 
@@ -120,7 +131,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         index = self.index_box()
         self.add(index)
 
-        self.connect("delete-event", self.destroy)
+        self.connect("delete-event", self.on_btn_cerrar_clicked)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_default_size (500, 400)
         self.show_all()
@@ -217,7 +228,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        if (self.formulario_siguiente == "crear_estudiante"):
+        if (self.formulario_siguiente == "crear_estudiant"):
             # Estudiante Graduado
             select = self.treeview.get_selection()
 
@@ -256,4 +267,47 @@ class Frm_Lista_Profesor(Gtk.Window):
             if response == Gtk.ResponseType.YES:
                 print("eliminando")
 
-            dialog.destroy()
+        dialog.destroy()
+
+    def on_btn_borrar_clicked(self, widget):
+        """
+        Evento que funciona al accionar el boton de curso
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
+        """
+        dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+                                   Gtk.ButtonsType.YES_NO, "Eliminar Profesor")
+        dialog.format_secondary_text(
+            "Está seguro que desea eliminar Profesor, los datos no se recuperarán?")
+        response = dialog.run()
+        dialog.destroy()
+        if response == Gtk.ResponseType.YES:
+            select = self.treeview.get_selection()
+
+            (model, ite) = select.get_selected()
+            id_seleccionado = model.get_value(ite, 0);
+
+            service = Profesor_service()
+            if (service.eliminar(id_seleccionado)):
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.OK, "Eliminado Correctamente")
+                dialog.format_secondary_text("Eliminado Correctamente")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.OK, "Error al eliminar")
+                dialog.format_secondary_text("Error en la base de datos al eliminar")
+                dialog.run()
+                dialog.destroy()
+            self.destroy()
+
+    def on_btn_cerrar_clicked(self, widget):
+        """
+        Evento que funciona al accionar el boton de cerrar
+
+        @param widget: Widget que esta relacionado al evento
+        @type widget: Gtk.Widget
+        """
+        self.destroy()
