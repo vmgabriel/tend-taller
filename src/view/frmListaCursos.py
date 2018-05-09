@@ -27,7 +27,7 @@ class Frm_Lista_Curso(Gtk.Window):
         self.formulario_siguiente = formulario_siguiente
         self.cod_profesor = cod_profesor
         self.id_curso = 0
-        self.modelo_mostrar = ["Nombre", "Aula", "Edificio", "Profesor", "Fecha_reunion"]
+        self.modelo_mostrar = ["id","Nombre", "Aula", "Edificio", "Profesor", "Fecha_reunion"]
         self.especificacion = especificacion
 
     def box1(self):
@@ -36,7 +36,7 @@ class Frm_Lista_Curso(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.software_liststore = Gtk.ListStore(str, str, int, int, str)
+        self.software_liststore = Gtk.ListStore(int, str, str, int, int, str)
 
         self.cargar_datos()
         self.matriz_to_liststore(self.filtro_parametros(self.lista_cursos))
@@ -143,7 +143,7 @@ class Frm_Lista_Curso(Gtk.Window):
         @rtype: tuple
         """
         fecha = str(vector[4].day) + "/" + str(vector[4].month) + "/" + str(vector[4].year)
-        return (vector[1],vector[2], vector[5], vector[6], fecha)
+        return (vector[0], vector[1],vector[2], vector[5], vector[6], fecha)
 
     def filtro_parametros(self, matriz):
         """
@@ -177,7 +177,32 @@ class Frm_Lista_Curso(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+                                   Gtk.ButtonsType.YES_NO, "Eliminar Curso")
+        dialog.format_secondary_text(
+            "Está seguro que desea eliminar curso, los datos no se recuperarán?")
+        response = dialog.run()
+        dialog.destroy()
+        if response == Gtk.ResponseType.YES:
+            select = self.treeview.get_selection()
+
+            (model, ite) = select.get_selected()
+            id_seleccionado = model.get_value(ite, 0);
+
+            service = Curso_service()
+            if (service.eliminar(id_seleccionado)):
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.OK, "Eliminado Correctamente")
+                dialog.format_secondary_text("Eliminado Correctamente")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.OK, "Error al eliminar")
+                dialog.format_secondary_text("Error en la base de datos al eliminar")
+                dialog.run()
+                dialog.destroy()
+            self.destroy()
 
     def on_btn_cerrar_clicked(self, widget):
         """

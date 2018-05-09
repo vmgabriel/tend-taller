@@ -63,3 +63,16 @@ class Curso_service:
         """
         query = "SELECT * FROM curso WHERE profesor={}".format(profesor)
         return self.conexion.enviar_consulta(query)
+
+    def eliminar(self, curso):
+        """
+        Elimina un curso de la base de datos
+
+        @param curso: id del curso a eliminar
+        @type curso: int
+
+        @return: True si se hizo correctamente
+        @rtype: boolean
+        """
+        query = "DELETE FROM curso WHERE id_curso={}".format(curso)
+        return (not self.conexion.enviar_registro(query))
