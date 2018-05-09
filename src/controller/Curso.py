@@ -27,3 +27,26 @@ class Curso_service:
         query = "SELECT * FROM curso;"
         consulta = self.conexion.enviar_consulta(query)
         return consulta
+
+    def guardar(self, curso):
+        """
+        Servicio para guardado de datos del curso
+
+        @param curso: Datos del curso al que se debe guardar en la base de datos
+        @type curso: <clase= 'Curso'>
+
+        @return: True si se guardaron los datos correctamente
+        @rtype: boolean
+        """
+        f1 = "{}-{}-{}".format(curso.dia_reunion.year, curso.dia_reunion.month, curso.dia_reunion.day)
+        query = """
+            INSERT INTO curso(nombre, aula, tiempo, dia_reunion, edificio, profesor)
+            VALUES ('{}', '{}', {}, '{}', {}, {});""".format(
+                curso.nombre,
+                curso.aula,
+                curso.tiempo,
+                f1,
+                curso.edificio,
+                curso.profesor
+            )
+        return (not self.conexion.enviar_registro(query))

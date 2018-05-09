@@ -21,6 +21,7 @@ from controller.Profesor import Profesor_service
 #view
 from view.frmCrearNombramiento import Frm_Crear_Nombramiento
 from view.frmCrearEstudiante import Frm_Crear_Estudiante
+from view.frmCrearCurso import Frm_Crear_Curso
 
 class Frm_Lista_Profesor(Gtk.Window):
     """
@@ -216,9 +217,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        if (self.formulario_siguiente == "lista_curso"):
-            print("seleccionado {}".format(self.formulario_siguiente))
-        elif (self.formulario_siguiente == "crear_estudiante"):
+        if (self.formulario_siguiente == "crear_estudiante"):
             # Estudiante Graduado
             select = self.treeview.get_selection()
 
@@ -239,7 +238,15 @@ class Frm_Lista_Profesor(Gtk.Window):
                 frm = Frm_Crear_Profesor()
                 frm.load(prof)
                 frm.dev_frm()
+        elif (self.formulario_siguiente == "crear_curso"):
+            select = self.treeview.get_selection()
 
+            (model, ite) = select.get_selected()
+            id_seleccionado = model.get_value(ite, 0)
+
+            frm_siguiente = Frm_Crear_Curso(id_seleccionado)
+            frm_siguiente.dev_frm()
+            self.destroy()
         elif (self.formulario_siguiente == ""):
             dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
                 Gtk.ButtonsType.YES_NO, "Eliminar Profesor")

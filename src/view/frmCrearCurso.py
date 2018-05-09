@@ -8,14 +8,25 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+#Modelo
+from model.Curso import Curso
+
+#controller
+from controller.Departamento import Departamento_service
+from controller.Curso import Curso_service
+
 class Frm_Crear_Curso(Gtk.Window):
     """
     Clase en la que se va a poder crear o modificar curso
     """
-    def __init__(self):
+    def __init__(self, profesor):
         """
         Construtor de la clase Frm_Crear_Curso, enfocado a la vista
+
+        @param profesor: Dato importante del profesor encargado
+        @type profesor: int
         """
+        self.profesor = profesor
         self.titulo = "Crear Curso"
         Gtk.Window.__init__(self, title=self.titulo)
 
@@ -79,8 +90,8 @@ class Frm_Crear_Curso(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.calendar = Gtk.Calendar()
-        box_p.pack_end(self.calendar, True, True, 1)
+        self.c_dia = Gtk.Calendar()
+        box_p.pack_end(self.c_dia, True, True, 1)
 
         self.lbl_dia = Gtk.Label("Seleccione Dia de Reunion:")
         box_p.pack_end(self.lbl_dia, False, False, 1)
@@ -97,21 +108,20 @@ class Frm_Crear_Curso(Gtk.Window):
         box_p = Gtk.Box(spacing=6)
 
         country_store = Gtk.ListStore(str)
-        countries = ["Austria", "Brazil", "Belgium", "France", "Germany",
-            "Switzerland", "United Kingdom", "United States of America",
-            "Uruguay"]
-        for country in countries:
+        for country in list(map(self.solo_nombre, self.lista_facultades)):
             country_store.append([country])
 
-        self.cb_edificio = Gtk.ComboBox.new_with_model(country_store)
-        self.cb_edificio.connect("changed", self.on_cb_edificio_changed)
-        renderer_text = Gtk.CellRendererText()
-        self.cb_edificio.pack_start(renderer_text, True)
-        self.cb_edificio.add_attribute(renderer_text, "text", 0)
-        box_p.pack_end(self.cb_edificio, True, True, 1)
+        self.cb_lug_edificio = Gtk.ComboBox.new_with_model(country_store)
 
-        self.lbl_edificio = Gtk.Label("Seleccione Edificio:")
-        box_p.pack_end(self.lbl_edificio, False, False, 1)
+        renderer_text = Gtk.CellRendererText()
+        self.cb_lug_edificio.pack_start(renderer_text, True)
+        self.cb_lug_edificio.add_attribute(renderer_text, "text", 0)
+        box_p.pack_end(self.cb_lug_edificio, True, True, 1)
+
+        #Hacer parte para activar la seleccion
+
+        self.lbl_lug_edificio = Gtk.Label("Seleccione Edificio:")
+        box_p.pack_end(self.lbl_lug_edificio, False, False, 1)
 
         return box_p
 
@@ -137,6 +147,24 @@ class Frm_Crear_Curso(Gtk.Window):
         box_p.pack_end(self.btn_salir, True, True, 0)
 
         return box_p
+
+    def cargar_datos(self):
+        """
+        Datos especificamente obtenidos de la base de datos puestos en el departamento
+        """
+        servicio = Departamento_service()
+        self.lista_facultades = servicio.ver_todos()
+
+    def solo_nombre(self, tupla):
+        """
+        Proceso funcional para que solo se tome el atributo de la posicion 1
+        @param tupla: Tupla
+        @type tupla: tuple
+
+        @return: datos str con el nombre
+        @rtype: str
+        """
+        return tupla[1]
 
     def index_box(self):
         """
@@ -172,6 +200,7 @@ class Frm_Crear_Curso(Gtk.Window):
         Enfocado en la construccion de cada una de las partes del formulario
         este funcionara cargando la caja principal y mostrando algunas propiedades del mismo
         """
+        self.cargar_datos()
         index = self.index_box()
         self.add(index)
 
@@ -180,16 +209,6 @@ class Frm_Crear_Curso(Gtk.Window):
         self.set_default_size (600, 600)
         self.show_all()
 
-
-    def on_cb_edificio_changed(self, widget):
-        """
-        Evento para combobox cuando este cambia
-
-        @param widget: Widget que esta relacionado al evento
-        @type widget: Gtk.Widget
-        """
-        pass
-
     def on_btn_guardar_clicked(self, widget):
         """
         Evento para button cuando este se hace clic
@@ -197,7 +216,35 @@ class Frm_Crear_Curso(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        if (self.txt_nombre.get_text() == "" or self.txt_aula.get_text() == "" or self.txt_tiempo.get_text() == ""):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                       Gtk.ButtonsType.CANCEL, "Datos no Introducidos")
+            dialog.format_secondary_text(
+                "Uno o mas datos no han sido introducidos")
+            dialog.run()
+            dialog.destroy()
+        else:
+            tiempo = int(self.txt_tiempo.get_text())
+            facultad = self.lista_facultades[self.cb_lug_edificio.get_active()][0]
+            fi = self.c_dia.get_date()
+
+            nuevo_curso = Curso(self.txt_nombre.get_text(), self.txt_aula.get_text(), tiempo, fi, facultad)
+            nuevo_curso.set_profesor(self.profesor)
+
+            service = Curso_service()
+            if (service.guardar(nuevo_curso)):
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                           Gtk.ButtonsType.CANCEL, "Datos Introducidos")
+                dialog.format_secondary_text("Datos introducidos satisfactoriamente")
+                dialog.run()
+                dialog.destroy()
+            else:
+                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                           Gtk.ButtonsType.CANCEL, "Error almacenamiento de datos")
+                dialog.format_secondary_text("Error de guardado de datos en la base de datos, comuniquese con soporte tecnico")
+                dialog.run()
+                dialog.destroy()
+            self.destroy()
 
     def on_btn_borrar_clicked(self, widget):
         """
@@ -206,7 +253,10 @@ class Frm_Crear_Curso(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        pass
+        self.txt_nombre.set_text("")
+        self.txt_aula.set_text("")
+        self.txt_tiempo.set_text("")
+        self.txt_nombre.grab_focus_without_selecting()
 
     def on_btn_salir_clicked(self, widget):
         """
