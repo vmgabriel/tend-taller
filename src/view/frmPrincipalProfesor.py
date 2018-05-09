@@ -56,7 +56,7 @@ class Frm_Principal_Profesor(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_borrar_curso = Gtk.Button(label="Borrar Estudiante")
+        self.btn_borrar_curso = Gtk.Button(label="Mostrar Estudiante")
         self.btn_borrar_curso.connect("clicked", self.on_btn_borrar_estudiante_clicked)
         box_p.pack_end(self.btn_borrar_curso, True, True, 1)
 
@@ -75,7 +75,7 @@ class Frm_Principal_Profesor(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_borrar_profesor = Gtk.Button(label="Borrar Profesor")
+        self.btn_borrar_profesor = Gtk.Button(label="Mostrar Profesor")
         self.btn_borrar_profesor.connect("clicked", self.on_btn_borrar_profesor_clicked)
         box_p.pack_end(self.btn_borrar_profesor, True, True, 1)
 
@@ -94,7 +94,7 @@ class Frm_Principal_Profesor(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        self.btn_modificar_profesor = Gtk.Button(label="Modificar Profesor")
+        self.btn_modificar_profesor = Gtk.Button(label="Cursos de Profesor")
         self.btn_modificar_profesor.connect("clicked", self.on_btn_modificar_profesor_clicked)
         box_p.pack_end(self.btn_modificar_profesor, True, True, 0)
 
@@ -143,8 +143,8 @@ class Frm_Principal_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        frmprof = Frm_Lista_Profesor("lista_curso")
-        frmprof.dev_frm()
+        frmcurso = Frm_Lista_Curso()
+        frmcurso.dev_frm()
 
     def on_btn_crear_curso_clicked(self, widget):
         """

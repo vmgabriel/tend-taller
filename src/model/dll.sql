@@ -59,7 +59,7 @@ CREATE TABLE "curso"
   "tiempo" INTEGER NOT NULL,
   "dia_reunion" TIMESTAMP NOT NULL,
   "edificio" INTEGER NOT NULL, /*departamento*/
-  "profesor" INTEGER NOT NULL
+  "profesor" INTEGER NOT NULL /*Profesor*/
 );
 
 CREATE TABLE "horario"
@@ -153,3 +153,5 @@ INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad
 INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1212121212, 'Pablo', 'Santiago', 'Prieto', 'Rozo', 31, 1, 1, 'calle 124', True, 'PHd. Universidad Hardvard', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',1,'profe2','profe2');
 
 INSERT INTO "profesor"(id_profesor, nombre1, nombre2, apellido1, apellido2, edad, lugar_nacimiento, ciudad_residencia, direccion_residencia, es_visitante, titulo, contrato, inicio_nombramiento, fin_nombramiento, facultad, contra, usuario) VALUES (1312121212, 'Danna', 'Valeria', 'Sanchez', 'Rodriguez', 28, 1, 1, 'calle 1 d22', True, 'Licenciada de Universidad Distrital', 'terminologia base 12.34 art. 23', '2017-12-12','2018-5-3',2,'profe3','profe3');
+
+INSERT INTO "curso"(nombre, aula, tiempo, dia_reunion, edificio, profesor) VALUES ('Tendencias de Ingeniera de Software', '413', 2, '2017-12-12', 1, 1010101010);

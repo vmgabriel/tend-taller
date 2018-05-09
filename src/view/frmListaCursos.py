@@ -8,11 +8,14 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+# Controlador
+from controller.Curso import Curso_service
+
 class Frm_Lista_Curso(Gtk.Window):
     """
     Clase de la lista de los cursos
     """
-    def __init__(self, cod_profesor, formulario_siguiente):
+    def __init__(self, cod_profesor=0, formulario_siguiente="lista_curso"):
         """
         Construtor de la clase Frm_Lista_Curso, enfocado a la vista
 
@@ -24,6 +27,7 @@ class Frm_Lista_Curso(Gtk.Window):
         self.formulario_siguiente = formulario_siguiente
         self.cod_profesor = cod_profesor
         self.id_curso = 0
+        self.modelo_mostrar = ["Nombre", "Aula", "Edificio", "Profesor", "Fecha_reunion"]
 
     def box1(self):
         """
@@ -31,13 +35,21 @@ class Frm_Lista_Curso(Gtk.Window):
         """
         box_p = Gtk.Box(spacing=6)
 
-        software_liststore = Gtk.ListStore(int, str, str, str)
-        treeview = Gtk.TreeView.new_with_model(software_liststore.filter_new())
+        self.software_liststore = Gtk.ListStore(str, str, int, int, str)
 
-        scrollable_treelist = Gtk.ScrolledWindow()
-        scrollable_treelist.set_vexpand(True)
-        box_p.pack_end(scrollable_treelist, True, True, 0)
-        scrollable_treelist.add(treeview)
+        self.cargar_datos()
+        self.matriz_to_liststore(self.filtro_parametros(self.lista_cursos))
+
+        self.language_filter = self.software_liststore.filter_new()
+
+        self.treeview = Gtk.TreeView.new_with_model(self.language_filter)
+
+        for i, column_title in enumerate(self.modelo_mostrar):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            self.treeview.append_column(column)
+
+        box_p.pack_end(self.treeview, True, True, 0)
 
         return box_p
 
@@ -93,6 +105,51 @@ class Frm_Lista_Curso(Gtk.Window):
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_default_size (500, 400)
         self.show_all()
+
+    def cargar_datos(self):
+        """
+        Construccion de los datos dentro de la pantalla
+        """
+        service = Curso_service()
+        self.lista_cursos = service.ver_todos()
+
+    def matriz_to_liststore(self, matriz):
+        """
+        Convierte una matriz comun y corriente en una listStore
+
+        @param matriz: Matriz que se va a convertir en listStore
+        @type matriz: <class= 'list'>
+
+        @return: listStore correspondiente de la matriz
+        @rtype: Gtk.listStore
+        """
+        for vector in matriz:
+            self.software_liststore.append(list(vector))
+
+    def filtro_parametro(self, vector):
+        """
+        Fitrla los parametros del vector deseado para ser puesto
+
+        @param vector: Vector que se va a reducir
+        @type vector: tuple
+
+        @return: Vector reducido
+        @rtype: tuple
+        """
+        fecha = str(vector[4].day) + "/" + str(vector[4].month) + "/" + str(vector[4].year)
+        return (vector[1],vector[2], vector[5], vector[6], fecha)
+
+    def filtro_parametros(self, matriz):
+        """
+        Filtra los parametros necesarios, no mas no menos
+
+        @param matriz: Matriz que se va a reducir
+        @type matriz: <class= 'list'>
+
+        @return: Matriz reducida con los parametros necesarios
+        @rtype: <class= 'list'>
+        """
+        return list(map(self.filtro_parametro, matriz))
 
     def on_btn_modificar_clicked(self, widget):
         """
