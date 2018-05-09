@@ -15,7 +15,7 @@ class Frm_Lista_Curso(Gtk.Window):
     """
     Clase de la lista de los cursos
     """
-    def __init__(self, cod_profesor=0, formulario_siguiente="lista_curso"):
+    def __init__(self, cod_profesor=0, formulario_siguiente="lista_curso", especificacion=None):
         """
         Construtor de la clase Frm_Lista_Curso, enfocado a la vista
 
@@ -28,6 +28,7 @@ class Frm_Lista_Curso(Gtk.Window):
         self.cod_profesor = cod_profesor
         self.id_curso = 0
         self.modelo_mostrar = ["Nombre", "Aula", "Edificio", "Profesor", "Fecha_reunion"]
+        self.especificacion = especificacion
 
     def box1(self):
         """
@@ -111,7 +112,12 @@ class Frm_Lista_Curso(Gtk.Window):
         Construccion de los datos dentro de la pantalla
         """
         service = Curso_service()
-        self.lista_cursos = service.ver_todos()
+        if (not self.especificacion):
+            self.lista_cursos = service.ver_todos()
+        elif (self.especificacion[1] == "cursos_profesor"):
+            self.lista_cursos = service.cursos_profesor(self.especificacion[0])
+        else:
+            pass
 
     def matriz_to_liststore(self, matriz):
         """

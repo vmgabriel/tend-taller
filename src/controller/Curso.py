@@ -50,3 +50,16 @@ class Curso_service:
                 curso.profesor
             )
         return (not self.conexion.enviar_registro(query))
+
+    def cursos_profesor(self, profesor):
+        """
+        Muestra los cursos del profesor, espeficado, los que tiene administracion total
+
+        @param profesor: Id de profesor
+        @type profesor: int
+
+        @return: Lista de datos que tiene que ver con el profesor en cuestion
+        @rtype: [tuple]
+        """
+        query = "SELECT * FROM curso WHERE profesor={}".format(profesor)
+        return self.conexion.enviar_consulta(query)

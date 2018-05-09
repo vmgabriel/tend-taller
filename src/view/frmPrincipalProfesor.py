@@ -221,10 +221,10 @@ class Frm_Principal_Profesor(Gtk.Window):
 
     def on_btn_modificar_profesor_clicked(self, widget):
         """
-        Evento para btn de modificar profesor
+        Evento para btn de eleccion de cursos del profesor
 
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        frmprof = Frm_Lista_Profesor("modificar_profesor")
+        frmprof = Frm_Lista_Curso(especificacion=[self.sesion.num, "cursos_profesor"])
         frmprof.dev_frm()
