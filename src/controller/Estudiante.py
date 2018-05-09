@@ -62,3 +62,13 @@ class Estudiante_service:
                                                                                               estudiante.usuario)
 
         return (not self.conexion.enviar_registro(query))
+
+    def ver_todos(self):
+        """
+        Retornara todos los datos del estudiante almacenados en la base de datos
+
+        @return: Datos de la base de datos
+        @rtype: [tuple]
+        """
+        query = "SELECT * FROM estudiante;"
+        return self.conexion.enviar_consulta(query)
