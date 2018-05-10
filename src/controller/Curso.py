@@ -74,5 +74,33 @@ class Curso_service:
         @return: True si se hizo correctamente
         @rtype: boolean
         """
-        query = "DELETE FROM curso WHERE id_curso={}".format(curso)
+        query = "DELETE FROM curso WHERE id_curso={};".format(curso)
         return (not self.conexion.enviar_registro(query))
+
+    def modificar(self, curso):
+        """
+        Modifica un curso de la base de datos
+
+        @param curso: datos generales del curso
+        @type curso: <class= 'Curso'>
+
+        @return: True si se hizo correctamente
+        @rtype: boolean
+        """
+        f1 = "{}-{}-{}".format(curso.dia_reunion.year, curso.dia_reunion.month, curso.dia_reunion.day)
+        query = """UPDATE curso SET (nombre, aula, tiempo, dia_reunion, edificio, profesor) = ('{}', '{}', {}, '{}', {}, {})
+                WHERE id_curso={}""".format(curso.nombre, curso.aula, curso.tiempo, f1, curso.edificio, curso.profesor, curso.id)
+        return (not self.conexion.enviar_registro(query))
+
+    def seleccionar(self, id_curso):
+        """
+        Selecciona el curso de la base de datos y obtiene los valores correpondientes
+
+        @param id_curso: Id del curso que desea obtener los datos
+        @type id_curso: int
+
+        @return: Datos restablecidos con el id del curso
+        @rtype: tuple
+        """
+        query="SELECT * FROM curso WHERE id_curso={}".format(id_curso)
+        return self.conexion.enviar_consulta(query)

@@ -19,7 +19,7 @@ class Frm_Crear_Curso(Gtk.Window):
     """
     Clase en la que se va a poder crear o modificar curso
     """
-    def __init__(self, profesor):
+    def __init__(self, profesor=0, datos=None):
         """
         Construtor de la clase Frm_Crear_Curso, enfocado a la vista
 
@@ -28,6 +28,7 @@ class Frm_Crear_Curso(Gtk.Window):
         """
         self.profesor = profesor
         self.titulo = "Crear Curso"
+        self.datos = datos
         Gtk.Window.__init__(self, title=self.titulo)
 
     def box1(self):
@@ -193,6 +194,11 @@ class Frm_Crear_Curso(Gtk.Window):
         box1 = self.box1()
         box_p.pack_end(box1, True, True, 0)
 
+        if (self.datos):
+            self.txt_nombre.set_text(self.datos[1])
+            self.txt_aula.set_text(self.datos[2])
+            self.txt_tiempo.set_text(str(self.datos[3]))
+
         return box_p
 
     def dev_frm(self):
@@ -224,27 +230,60 @@ class Frm_Crear_Curso(Gtk.Window):
             dialog.run()
             dialog.destroy()
         else:
-            tiempo = int(self.txt_tiempo.get_text())
-            facultad = self.lista_facultades[self.cb_lug_edificio.get_active()][0]
-            fi = self.c_dia.get_date()
-
-            nuevo_curso = Curso(self.txt_nombre.get_text(), self.txt_aula.get_text(), tiempo, fi, facultad)
-            nuevo_curso.set_profesor(self.profesor)
-
-            service = Curso_service()
-            if (service.guardar(nuevo_curso)):
-                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
-                                           Gtk.ButtonsType.CANCEL, "Datos Introducidos")
-                dialog.format_secondary_text("Datos introducidos satisfactoriamente")
-                dialog.run()
-                dialog.destroy()
+            if (self.datos):
+                self.modificar()
             else:
-                dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
-                                           Gtk.ButtonsType.CANCEL, "Error almacenamiento de datos")
-                dialog.format_secondary_text("Error de guardado de datos en la base de datos, comuniquese con soporte tecnico")
-                dialog.run()
-                dialog.destroy()
+                self.eliminar()
             self.destroy()
+
+    def modificar(self):
+        """
+        Especializacion de Modificar
+        """
+        tiempo = int(self.txt_tiempo.get_text())
+        facultad = self.lista_facultades[self.cb_lug_edificio.get_active()][0]
+        fi = self.c_dia.get_date()
+        m_curso = Curso(self.txt_nombre.get_text(), self.txt_aula.get_text(), tiempo, fi, facultad, self.datos[0])
+        m_curso.set_profesor(self.datos[6])
+
+        service = Curso_service()
+        if (service.modificar(m_curso)):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                       Gtk.ButtonsType.CANCEL, "Datos Modifcados correctamente")
+            dialog.format_secondary_text("Datos modificados en la base de datos satisfactoriamente")
+            dialog.run()
+            dialog.destroy()
+        else:
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                       Gtk.ButtonsType.CANCEL, "Error almacenamiento de datos")
+            dialog.format_secondary_text("Error de atualizacion de datos en la base de datos, comuniquese con soporte tecnico")
+            dialog.run()
+            dialog.destroy()
+
+    def eliminar(self):
+        """
+        Especializacion de eliminar
+        """
+        tiempo = int(self.txt_tiempo.get_text())
+        facultad = self.lista_facultades[self.cb_lug_edificio.get_active()][0]
+        fi = self.c_dia.get_date()
+
+        nuevo_curso = Curso(self.txt_nombre.get_text(), self.txt_aula.get_text(), tiempo, fi, facultad)
+        nuevo_curso.set_profesor(self.profesor)
+
+        service = Curso_service()
+        if (service.guardar(nuevo_curso)):
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                       Gtk.ButtonsType.CANCEL, "Datos Introducidos")
+            dialog.format_secondary_text("Datos introducidos satisfactoriamente")
+            dialog.run()
+            dialog.destroy()
+        else:
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
+                                       Gtk.ButtonsType.CANCEL, "Error almacenamiento de datos")
+            dialog.format_secondary_text("Error de guardado de datos en la base de datos, comuniquese con soporte tecnico")
+            dialog.run()
+            dialog.destroy()
 
     def on_btn_borrar_clicked(self, widget):
         """

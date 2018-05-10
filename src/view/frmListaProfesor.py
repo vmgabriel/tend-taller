@@ -27,7 +27,7 @@ class Frm_Lista_Profesor(Gtk.Window):
     """
     Clase de la lista de los profesores
     """
-    def __init__(self, formulario_siguiente=""):
+    def __init__(self, formulario_siguiente="", datos_profesor=None):
         """
         Construtor de la clase Frm_Lista_Profesor, enfocado a la vista
 
@@ -37,6 +37,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         self.titulo = "Lista de Profesores"
         Gtk.Window.__init__(self, title=self.titulo)
         self.formulario_siguiente = formulario_siguiente
+        self.datos_profesor = datos_profesor
         self.modelo_mostrar = ["id", "Nombre", "Apellido 1", "Apellido 2", "Facultad"]
 
     def box1(self):
@@ -228,7 +229,7 @@ class Frm_Lista_Profesor(Gtk.Window):
         @param widget: Widget que esta relacionado al evento
         @type widget: Gtk.Widget
         """
-        if (self.formulario_siguiente == "crear_estudiant"):
+        if (self.formulario_siguiente == "crear_estudiante"):
             # Estudiante Graduado
             select = self.treeview.get_selection()
 
@@ -258,6 +259,8 @@ class Frm_Lista_Profesor(Gtk.Window):
             frm_siguiente = Frm_Crear_Curso(id_seleccionado)
             frm_siguiente.dev_frm()
             self.destroy()
+        elif (self.formulario_siguiente == "modificar_curso"):
+            self.fs_modificar_profesor()
         elif (self.formulario_siguiente == ""):
             dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
                 Gtk.ButtonsType.YES_NO, "Eliminar Profesor")
@@ -268,6 +271,22 @@ class Frm_Lista_Profesor(Gtk.Window):
                 print("eliminando")
 
         dialog.destroy()
+
+    def fs_modificar_profesor(self):
+        """
+        Evento de caracterizacion y limpieza de codigo
+        """
+        select = self.treeview.get_selection()
+
+        (model, ite) = select.get_selected()
+
+        lista_curso = list(self.datos_profesor)
+
+        lista_curso[6] = model.get_value(ite, 0)
+
+        frm = Frm_Crear_Curso(0,lista_curso)
+        frm.dev_frm()
+        self.destroy()
 
     def on_btn_borrar_clicked(self, widget):
         """

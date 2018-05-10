@@ -11,6 +11,10 @@ from gi.repository import Gtk
 # Controlador
 from controller.Curso import Curso_service
 
+# view
+from view.frmListaProfesor import Frm_Lista_Profesor
+from view.frmCrearCurso import Frm_Crear_Curso
+
 class Frm_Lista_Curso(Gtk.Window):
     """
     Clase de la lista de los cursos
@@ -168,7 +172,25 @@ class Frm_Lista_Curso(Gtk.Window):
             self.id_curso = 1
             self.destroy()
         else:
-            print("modificar")
+            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.QUESTION,
+                                       Gtk.ButtonsType.YES_NO, "Modificar Profesor")
+            dialog.format_secondary_text(
+                "Desea modificar el profesor vinculado al curso?")
+            response = dialog.run()
+            dialog.destroy()
+            service = Curso_service()
+            select = self.treeview.get_selection()
+
+            (model, ite) = select.get_selected()
+            id_seleccionado = model.get_value(ite, 0)
+            if response == Gtk.ResponseType.YES:
+                frm = Frm_Lista_Profesor("modificar_curso", service.seleccionar(id_seleccionado)[0])
+            else:
+                frm = Frm_Crear_Curso(0, service.seleccionar(id_seleccionado)[0])
+            frm.dev_frm()
+
+
+
 
     def on_btn_borrar_clicked(self, widget):
         """
